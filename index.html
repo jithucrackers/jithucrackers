@@ -10,144 +10,102 @@
 
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
             margin: 0;
             padding: 15px;
             background-color: #f4f4f4;
             line-height: 1.5;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: auto;
             background-color: #fff;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
-        .header, .payment-details {
-            text-align: center;
-            border: 3px solid #000;
+        .header-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
             padding: 15px;
-            margin-bottom: 20px;
-            background-color: #ff0;
-            color: #000;
+            margin-bottom: 25px;
+            background-color: #FFFDE7;
+            border: 2px solid #FFC107;
+            border-radius: 8px;
         }
-        .header h1 { margin: 0; font-size: 2.2em; }
-        .header p { margin: 5px 0; font-size: 1.1em; font-weight: bold; }
-        .payment-details h2 { margin-top: 0; }
-        .payment-details p { margin: 8px 0; font-size: 1em; font-weight: bold; }
+        .company-info, .payment-info {
+            flex: 1 1 100%; /* Full width on mobile */
+            padding: 10px;
+            text-align: center;
+        }
+        .company-info h1 { margin: 0; font-size: 2.4em; color: #D32F2F; }
+        .company-info p { margin: 5px 0; font-size: 1.1em; font-weight: bold; }
+        
+        .payment-info {
+            background-color: #ffffff;
+            border: 1px solid #FFECB3;
+            border-radius: 8px;
+        }
+        .payment-info h2 { margin-top: 0; font-size: 1.4em; color: #D32F2F; }
+        .payment-info p { margin: 6px 0; font-size: 1em; font-weight: 500; text-align: left; padding-left: 15px;}
+        .payment-info p strong { color: #555; }
 
         .form-details {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: 1fr;
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
-        .form-details .form-group {
-            flex: 1 1 100%; /* Full width on mobile */
-        }
-        .form-details label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        .form-details input {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .table-wrapper {
-            overflow-x: auto; /* Makes table scrollable on small screens */
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-            white-space: normal;
-            word-wrap: break-word;
-        }
-        th:nth-child(2), td:nth-child(2) {
-             min-width: 250px; /* Give product name more space */
-        }
-        thead th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-            position: sticky;
-            top: 0;
-            z-index: 1;
-        }
-        .category-header {
-            background-color: #e0e0e0;
-            font-weight: bold;
-            text-align: center !important;
-            position: sticky;
-            top: 45px; /* Stick below the main header */
-            z-index: 1;
-        }
-        .quantity-input, .amount-output {
-            width: 80px;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            text-align: center;
-        }
-        .amount-output {
-            background-color: #e9e9e9;
-            font-weight: bold;
-        }
-        .bottom-controls {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .total-section {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-right: auto; /* Pushes total to the left */
-        }
-        #generatePdfBtn {
-            padding: 12px 25px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            background-color: #28a745;
-            color: white;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        #generatePdfBtn:hover {
-            background-color: #218838;
-        }
+        .form-details label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-details input { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
         
-        /* Responsive Adjustments for larger screens */
-        @media (min-width: 600px) {
-            .form-details .form-group {
-                flex: 1 1 48%; /* Two columns on larger screens */
-            }
-            .total-section {
-                margin-right: 0; /* Align right on larger screens */
-            }
+        .table-wrapper { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th:nth-child(2), td:nth-child(2) { min-width: 250px; }
+        thead th { background-color: #f2f2f2; font-weight: bold; position: sticky; top: 0; z-index: 2; }
+        .category-header { background-color: #e0e0e0; font-weight: bold; text-align: center !important; position: sticky; top: 45px; z-index: 1; }
+        .quantity-input, .amount-output { width: 80px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; text-align: center; }
+        .amount-output { background-color: #e9e9e9; font-weight: bold; }
+        
+        .bottom-controls { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; margin-top: 20px; }
+        .total-section { font-size: 1.6em; font-weight: bold; }
+        #generatePdfBtn { padding: 12px 25px; font-size: 16px; cursor: pointer; border: none; background-color: #28a745; color: white; border-radius: 5px; transition: background-color 0.3s; }
+        #generatePdfBtn:hover { background-color: #218838; }
+        
+        /* Responsive Grid Layouts */
+        @media (min-width: 768px) {
+            .header-grid { flex-wrap: nowrap; }
+            .company-info { text-align: left; }
+            .payment-info { flex-basis: 450px; }
+            .form-details { grid-template-columns: 1fr 1fr; }
+        }
+        @media (min-width: 1024px) {
+            .form-details { grid-template-columns: 1fr 1fr 1fr; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header">
-        <h1>Jithu Crackers</h1>
-        <p>No.50, N S street, Sivakasi.</p>
-        <p>QUALITY, QUANTITY & TRUST</p>
-        <p>Phone No: 9952732777</p>
+    <div class="header-grid">
+        <div class="company-info">
+            <h1>Jithu Crackers</h1>
+            <p>No.50, N S street, Sivakasi.</p>
+            <p>QUALITY, QUANTITY & TRUST</p>
+            <p>Phone No: 9952732777</p>
+        </div>
+        <div class="payment-info">
+            <h2>Payment Details</h2>
+            <p><strong>G pay or phone pe:</strong> 9952732777, 8220693192</p>
+            <p><strong>Bank:</strong> State Bank Of India</p>
+            <p><strong>Account Name:</strong> K Praveenkumar</p>
+            <p><strong>Account No:</strong> 31492853796</p>
+            <p><strong>Branch:</strong> Thiruthangal</p>
+            <p><strong>IFS Code:</strong> SBIN0012767</p>
+            <p><strong>MICR code:</strong> 626002025</p>
+        </div>
     </div>
 
     <div class="form-details">
@@ -189,104 +147,273 @@
             </thead>
             <tbody class="product-tbody">
                 <tr><td colspan="8" class="category-header">SPARKLERS - கம்பி மத்தாப்பு</td></tr>
-                <tr><td>1</td><td>7cm Electric Sparklers</td><td>7செமீ சாதா கம்பி</td><td>32.00</td><td class="rate">8.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>2</td><td>7cm Glitring Sparklers</td><td>7செமீ கிளிட்டரிங் கம்பி</td><td>36.00</td><td class="rate">9.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>3</td><td>7cm Green Sparklers</td><td>7செமீ பச்சை கம்பி</td><td>38.00</td><td class="rate">10.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>4</td><td>7cm Red Sparklers</td><td>7செமீ சிவப்பு கம்பி</td><td>40.00</td><td class="rate">10.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>5</td><td>10cm Electric Sparklers</td><td>10செமீ சாதா கம்பி</td><td>48.00</td><td class="rate">12.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>6</td><td>10cm Glitring Sparklers</td><td>10செமீ கிளிட்டரிங் கம்பி</td><td>52.00</td><td class="rate">13.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>7</td><td>10cm Green Sparklers</td><td>10செமீ பச்சை கம்பி</td><td>56.00</td><td class="rate">14.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>8</td><td>10cm Red Sparklers</td><td>10செமீ சிவப்பு கம்பி</td><td>60.00</td><td class="rate">15.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>10</td><td>12cm Electric Sparklers</td><td>12செமீ சாதா கம்பி</td><td>80.00</td><td class="rate">20.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>11</td><td>12cm Glitring Sparklers</td><td>12செமீ கிளிட்டரிங் கம்பி</td><td>85.00</td><td class="rate">22.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>12</td><td>12cm Green Sparklers</td><td>12செமீ பச்சை கம்பி</td><td>92.00</td><td class="rate">23.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>13</td><td>12cm Red Sparklers</td><td>12செமீ சிவப்பு கம்பி</td><td>100.00</td><td class="rate">25.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>14</td><td>15cm Electric Sparklers</td><td>15செமீ சாதா கம்பி</td><td>112.00</td><td class="rate">28.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>15</td><td>15cm Glitring Sparklers</td><td>15செமீ கிளிட்டரிங் கம்பி</td><td>133.00</td><td class="rate">34.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>16</td><td>15cm Green Sparklers</td><td>15செமீ பச்சை கம்பி</td><td>140.00</td><td class="rate">35.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>17</td><td>15cm Red Sparklers</td><td>15செமீ சிவப்பு கம்பி</td><td>152.00</td><td class="rate">38.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>19</td><td>30cm Electric Sparklers</td><td>30செமீ சாதா கம்பி</td><td>112.00</td><td class="rate">28.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>20</td><td>30cm Glitring Sparklers</td><td>30செமீ கிளிட்டரிங் கம்பி</td><td>133.00</td><td class="rate">34.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>21</td><td>30cm Green Sparklers</td><td>30செமீ பச்சை கம்பி</td><td>140.00</td><td class="rate">35.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>22</td><td>30cm Red Sparklers</td><td>30செமீ சிவப்பு கம்பி</td><td>152.00</td><td class="rate">38.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>23</td><td>50cm Electric Sparklers</td><td>50செமீ சாதா கம்பி</td><td>560.00</td><td class="rate">140.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>24</td><td>50cm Glitring Sparklers</td><td>50செமீ கிளிட்டரிங் கம்பி</td><td>720.00</td><td class="rate">180.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>25</td><td>50cm Green Sparklers</td><td>50செமீ பச்சை கம்பி</td><td>740.00</td><td class="rate">185.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>31</td><td>7cm 50-50 Sparklers (krishna)</td><td>7செமீ 50-50 (கிருஷ்ணா)</td><td>180.00</td><td class="rate">45.00</td><td>20 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>32</td><td>10cm Red Sparklers (krishna)</td><td>10செமீ சிவப்பு கம்பி (கிருஷ்ணா)</td><td>176.00</td><td class="rate">44.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>34</td><td>12cm Green Sparklers (krishna)</td><td>12செமீ பச்சை கம்பி (கிருஷ்ணா)</td><td>228.00</td><td class="rate">57.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>36</td><td>50cm Colour Sparklers (krishna)</td><td>50செமீ கலர் கம்பி (கிருஷ்ணா)</td><td>940.00</td><td class="rate">235.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>38</td><td>7cm Titanium Gilitring Sparklers(asok)</td><td>7செமீ டைட்டேனியம் கிளிட்டரிங் கம்பி (கிருஷ்ணா)</td><td>76.00</td><td class="rate">19.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>39</td><td>7cm Green Sparklers (asok)</td><td>7செமீ பச்சை கம்பி (அசோக்)</td><td>80.00</td><td class="rate">20.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>40</td><td>10cm (asok) vicky Electric Sparklers</td><td>10செமீ விக்கி சாதா கம்பி (அசோக்)</td><td>96.00</td><td class="rate">24.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>41</td><td>10cm (asok) vicky Colour Sparklers</td><td>10செமீ விக்கி கலர் கம்பி (அசோக்)</td><td>104.00</td><td class="rate">26.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>42</td><td>10cm Green Sparklers (asok)</td><td>10செமீ பச்சை கம்பி (அசோக்)</td><td>112.00</td><td class="rate">28.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>43</td><td>10cm Sonata Gold (asok)</td><td>10செமீ சொனாட்டா கோல்டு (அசோக்)</td><td>160.00</td><td class="rate">40.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>44</td><td>10cm Orange Sparklers (asok)</td><td>10செமீ ஆரஞ்சு கம்பி (அசோக்)</td><td>160.00</td><td class="rate">40.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>45</td><td>10cm 5 In 1 Sparklers (asok)</td><td>10செமீ 5 இன் 1 கம்பி (அசோக்)</td><td>1000.00</td><td class="rate">250.00</td><td>1Pkt (50p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>46</td><td>12cm Electric Sparklers (asok)</td><td>12செமீ சாதா கம்பி (அசோக்)</td><td>150.00</td><td class="rate">38.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>47</td><td>12cm Giltring Sparklers (asok)</td><td>12செமீ கிளிட்டரிங் கம்பி (அசோக்)</td><td>200.00</td><td class="rate">50.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>48</td><td>12cm Green Sparklers (asok)</td><td>12செமீ பச்சை கம்பி (அசோக்)</td><td>200.00</td><td class="rate">50.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>49</td><td>12cm Twin-tone (asok)</td><td>12செமீ டுவின் டோன் (அசோக்)</td><td>203.00</td><td class="rate">51.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>50</td><td>15cm Electric Sparklers (asok)</td><td>15செமீ சாதா கம்பி (அசோக்)</td><td>268.00</td><td class="rate">67.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>51</td><td>15cm Green Sparklers (asok)</td><td>15செமீ பச்சை கம்பி (அசோக்)</td><td>338.00</td><td class="rate">85.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>52</td><td>30cm Electric Sparklers (asok)</td><td>30செமீ சாதா கம்பி (அசோக்)</td><td>270.00</td><td class="rate">68.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>53</td><td>30cm Green Sparklers (asok)</td><td>30செமீ பச்சை கம்பி (அசோக்)</td><td>328.00</td><td class="rate">82.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>54</td><td>30cm Glitring Sparklers (asok)</td><td>30செமீ கிளிட்டரிங் கம்பி (அசோக்)</td><td>300.00</td><td class="rate">75.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>55</td><td>30cm Red Sparklers (asok)</td><td>30செமீ சிவப்பு கம்பி (அசோக்)</td><td>364.00</td><td class="rate">91.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>56</td><td>50cm Electric Sparklers (asok)</td><td>50செமீ சாதா கம்பி (அசோக்)</td><td>760.00</td><td class="rate">190.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>57</td><td>50cm Giltring Sparklers (asok)</td><td>50செமீ கிளிட்டரிங் கம்பி (அசோக்)</td><td>880.00</td><td class="rate">220.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>58</td><td>50cm Mix Trix Sparklers (asok)</td><td>50செமீ மிக்ஸ் ட்ரிக்ஸ் (அசோக்)</td><td>880.00</td><td class="rate">220.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>59</td><td>75cm Giltring Sparklers (asok)</td><td>75செமீ கிளிட்டரிங் கம்பி (அசோக்)</td><td>1140.00</td><td class="rate">285.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>60</td><td>75cm Mix Trix Sparklers (asok)</td><td>75செமீ மிக்ஸ் ட்ரிக்ஸ் கம்பி (அசோக்)</td><td>1280.00</td><td class="rate">320.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>61</td><td>Rotating Sparklers (asok)</td><td>ரொட்டேட்டிங் கம்பி (அசோக்)</td><td>840.00</td><td class="rate">210.00</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>464</td><td>15cm 5in1 Wonder (asok)</td><td>15செமீ 5 இன் 1 ஒன்டர் (அசோக்)</td><td>1900.00</td><td class="rate">475.00</td><td>1 Pck(50p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>465</td><td>15cm Mayajal (asok)</td><td>15செமீ மாயா ஜால் (அசோக்)</td><td>400.00</td><td class="rate">100.00</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>494</td><td>30cm Millenimum Mix (asok)</td><td>30செமீ மில்லினியம் மிக்ஸ் (அசோக்)</td><td>360.00</td><td class="rate">90.00</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>495</td><td>12cm Silver Drops (asok)</td><td>12செமீ சில்வர் ட்ராப்ஸ் (அசோக்)</td><td>248.00</td><td class="rate">62.00</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>521</td><td>12cm Red (krishna)</td><td>12செமீ சிவப்பு கம்பி (கிருஷ்ணா)</td><td>240.00</td><td class="rate">60.00</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>522</td><td>12cm Glittring (krishna)</td><td>12செமீ கிளிட்டரிங் கம்பி (கிருஷ்ணா)</td><td>200.00</td><td class="rate">50.00</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>526</td><td>15cm Red (asok)</td><td>15செமீ சிவப்பு கம்பி (அசோக்)</td><td>400.00</td><td class="rate">100.00</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>527</td><td>15cm Glittring (asok)</td><td>15செமீ கிளிட்டரிங் கம்பி (அசோக்)</td><td>380.00</td><td class="rate">95.00</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>542</td><td>75cm Electric (asok)</td><td>75செமீ சாதா கம்பி (அசோக்)</td><td>1060.00</td><td class="rate">265.00</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>1</td><td>7cm Electric Sparklers</td><td>7செமீ சாதா கம்பி</td><td>36.00</td><td class="rate">9.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>2</td><td>7cm Glitring Sparklers</td><td>7செமீ கிளிட்டரிங் கம்பி</td><td>41.00</td><td class="rate">10.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>3</td><td>7cm Green Sparklers</td><td>7செமீ பச்சை கம்பி</td><td>43.00</td><td class="rate">10.75</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>4</td><td>7cm Red Sparklers</td><td>7செமீ சிவப்பு கம்பி</td><td>45.00</td><td class="rate">11.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>5</td><td>10cm Electric Sparklers</td><td>10செமீ சாதா கம்பி</td><td>54.00</td><td class="rate">13.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>6</td><td>10cm Glitring Sparklers</td><td>10செமீ கிளிட்டரிங் கம்பி</td><td>59.00</td><td class="rate">14.75</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>7</td><td>10cm Green Sparklers</td><td>10செமீ பச்சை கம்பி</td><td>63.00</td><td class="rate">15.75</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>8</td><td>10cm Red Sparklers</td><td>10செமீ சிவப்பு கம்பி</td><td>68.00</td><td class="rate">17.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>10</td><td>12cm Electric Sparklers</td><td>12செமீ சாதா கம்பி</td><td>90.00</td><td class="rate">22.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>11</td><td>12cm Glitring Sparklers</td><td>12செமீ கிளிட்டரிங் கம்பி</td><td>96.00</td><td class="rate">24.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>12</td><td>12cm Green Sparklers</td><td>12செமீ பச்சை கம்பி</td><td>104.00</td><td class="rate">26.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>13</td><td>12cm Red Sparklers</td><td>12செமீ சிவப்பு கம்பி</td><td>113.00</td><td class="rate">28.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>14</td><td>15cm Electric Sparklers</td><td>15செமீ சாதா கம்பி</td><td>126.00</td><td class="rate">31.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>15</td><td>15cm Glitring Sparklers</td><td>15செமீ கிளிட்டரிங் கம்பி</td><td>150.00</td><td class="rate">37.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>16</td><td>15cm Green Sparklers</td><td>15செமீ பச்சை கம்பி</td><td>158.00</td><td class="rate">39.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>17</td><td>15cm Red Sparklers</td><td>15செமீ சிவப்பு கம்பி</td><td>171.00</td><td class="rate">42.75</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>19</td><td>30cm Electric Sparklers</td><td>30செமீ சாதா கம்பி</td><td>126.00</td><td class="rate">31.50</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>20</td><td>30cm Glitring Sparklers</td><td>30செமீ கிளிட்டரிங் கம்பி</td><td>150.00</td><td class="rate">37.50</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>21</td><td>30cm Green Sparklers</td><td>30செமீ பச்சை கம்பி</td><td>158.00</td><td class="rate">39.50</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>22</td><td>30cm Red Sparklers</td><td>30செமீ சிவப்பு கம்பி</td><td>171.00</td><td class="rate">42.75</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>23</td><td>50cm Electric Sparklers</td><td>50செமீ சாதா கம்பி</td><td>630.00</td><td class="rate">157.50</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>24</td><td>50cm Glitring Sparklers</td><td>50செமீ கிளிட்டரிங் கம்பி</td><td>810.00</td><td class="rate">202.50</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>25</td><td>50cm Green Sparklers</td><td>50செமீ பச்சை கம்பி</td><td>833.00</td><td class="rate">208.25</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>31</td><td>7cm 50-50 Sparklers (krishna)</td><td>7செமீ 50-50 (கிருஷ்ணா)</td><td>203.00</td><td class="rate">50.75</td><td>20 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>32</td><td>10cm Red Sparklers (krishna)</td><td>10செமீ சிவப்பு கம்பி (கிருஷ்ணா)</td><td>198.00</td><td class="rate">49.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>34</td><td>12cm Green Sparklers (krishna)</td><td>12செமீ பச்சை கம்பி (கிருஷ்ணா)</td><td>257.00</td><td class="rate">64.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>36</td><td>50cm Colour Sparklers (krishna)</td><td>50செமீ கலர் கம்பி (கிருஷ்ணா)</td><td>1058.00</td><td class="rate">264.50</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>38</td><td>7cm Titanium Gilitring Sparklers(asok)</td><td>7செமீ டைட்டேனியம் கிளிட்டரிங் கம்பி (கிருஷ்ணா)</td><td>86.00</td><td class="rate">21.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>39</td><td>7cm Green Sparklers (asok)</td><td>7செமீ பச்சை கம்பி (அசோக்)</td><td>90.00</td><td class="rate">22.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>40</td><td>10cm (asok) vicky Electric Sparklers</td><td>10செமீ விக்கி சாதா கம்பி (அசோக்)</td><td>108.00</td><td class="rate">27.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>41</td><td>10cm (asok) vicky Colour Sparklers</td><td>10செமீ விக்கி கலர் கம்பி (அசோக்)</td><td>117.00</td><td class="rate">29.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>42</td><td>10cm Green Sparklers (asok)</td><td>10செமீ பச்சை கம்பி (அசோக்)</td><td>126.00</td><td class="rate">31.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>43</td><td>10cm Sonata Gold (asok)</td><td>10செமீ சொனாட்டா கோல்டு (அசோக்)</td><td>180.00</td><td class="rate">45.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>44</td><td>10cm Orange Sparklers (asok)</td><td>10செமீ ஆரஞ்சு கம்பி (அசோக்)</td><td>180.00</td><td class="rate">45.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>45</td><td>10cm 5 In 1 Sparklers (asok)</td><td>10செமீ 5 இன் 1 கம்பி (அசோக்)</td><td>1125.00</td><td class="rate">281.25</td><td>1Pkt (50p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>46</td><td>12cm Electric Sparklers (asok)</td><td>12செமீ சாதா கம்பி (அசோக்)</td><td>169.00</td><td class="rate">42.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>47</td><td>12cm Giltring Sparklers (asok)</td><td>12செமீ கிளிட்டரிங் கம்பி (அசோக்)</td><td>225.00</td><td class="rate">56.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>48</td><td>12cm Green Sparklers (asok)</td><td>12செமீ பச்சை கம்பி (அசோக்)</td><td>225.00</td><td class="rate">56.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>49</td><td>12cm Twin-tone (asok)</td><td>12செமீ டுவின் டோன் (அசோக்)</td><td>228.00</td><td class="rate">57.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>50</td><td>15cm Electric Sparklers (asok)</td><td>15செமீ சாதா கம்பி (அசோக்)</td><td>302.00</td><td class="rate">75.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>51</td><td>15cm Green Sparklers (asok)</td><td>15செமீ பச்சை கம்பி (அசோக்)</td><td>380.00</td><td class="rate">95.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>52</td><td>30cm Electric Sparklers (asok)</td><td>30செமீ சாதா கம்பி (அசோக்)</td><td>304.00</td><td class="rate">76.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>53</td><td>30cm Green Sparklers (asok)</td><td>30செமீ பச்சை கம்பி (அசோக்)</td><td>369.00</td><td class="rate">92.25</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>54</td><td>30cm Glitring Sparklers (asok)</td><td>30செமீ கிளிட்டரிங் கம்பி (அசோக்)</td><td>338.00</td><td class="rate">84.50</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>55</td><td>30cm Red Sparklers (asok)</td><td>30செமீ சிவப்பு கம்பி (அசோக்)</td><td>409.00</td><td class="rate">102.25</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>56</td><td>50cm Electric Sparklers (asok)</td><td>50செமீ சாதா கம்பி (அசோக்)</td><td>855.00</td><td class="rate">213.75</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>57</td><td>50cm Giltring Sparklers (asok)</td><td>50செமீ கிளிட்டரிங் கம்பி (அசோக்)</td><td>990.00</td><td class="rate">247.50</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>58</td><td>50cm Mix Trix Sparklers (asok)</td><td>50செமீ மிக்ஸ் ட்ரிக்ஸ் (அசோக்)</td><td>990.00</td><td class="rate">247.50</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>59</td><td>75cm Giltring Sparklers (asok)</td><td>75செமீ கிளிட்டரிங் கம்பி (அசோக்)</td><td>1283.00</td><td class="rate">320.75</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>60</td><td>75cm Mix Trix Sparklers (asok)</td><td>75செமீ மிக்ஸ் ட்ரிக்ஸ் கம்பி (அசோக்)</td><td>1440.00</td><td class="rate">360.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>61</td><td>Rotating Sparklers (asok)</td><td>ரொட்டேட்டிங் கம்பி (அசோக்)</td><td>945.00</td><td class="rate">236.25</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>464</td><td>15cm 5in1 Wonder (asok)</td><td>15செமீ 5 இன் 1 ஒன்டர் (அசோக்)</td><td>2138.00</td><td class="rate">534.50</td><td>1 Pck(50p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>465</td><td>15cm Mayajal (asok)</td><td>15செமீ மாயா ஜால் (அசோக்)</td><td>450.00</td><td class="rate">112.50</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>494</td><td>30cm Millenimum Mix (asok)</td><td>30செமீ மில்லினியம் மிக்ஸ் (அசோக்)</td><td>405.00</td><td class="rate">101.25</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>495</td><td>12cm Silver Drops (asok)</td><td>12செமீ சில்வர் ட்ராப்ஸ் (அசோக்)</td><td>279.00</td><td class="rate">69.75</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>521</td><td>12cm Red (krishna)</td><td>12செமீ சிவப்பு கம்பி (கிருஷ்ணா)</td><td>270.00</td><td class="rate">67.50</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>522</td><td>12cm Glittring (krishna)</td><td>12செமீ கிளிட்டரிங் கம்பி (கிருஷ்ணா)</td><td>225.00</td><td class="rate">56.25</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>526</td><td>15cm Red (asok)</td><td>15செமீ சிவப்பு கம்பி (அசோக்)</td><td>450.00</td><td class="rate">112.50</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>527</td><td>15cm Glittring (asok)</td><td>15செமீ கிளிட்டரிங் கம்பி (அசோக்)</td><td>428.00</td><td class="rate">107.00</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>542</td><td>75cm Electric (asok)</td><td>75செமீ சாதா கம்பி (அசோக்)</td><td>1193.00</td><td class="rate">298.25</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
                 <tr><td colspan="8" class="category-header">GROUND CHAKKAR - தரைச்சக்கரம்</td></tr>
-                <tr><td>62</td><td>Ground Chakkar Big (10 Pce)</td><td>தரைச்சக்கரம் பிக் (10பீஸ்)</td><td>100.00</td><td class="rate">25.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>63</td><td>Ground Chakkar Big (25 Pce)</td><td>தரைச்சக்கரம் பிக் (25பீஸ்)</td><td>240.00</td><td class="rate">60.00</td><td>10pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>64</td><td>Ground Chakkar Special</td><td>தரைச்சக்கரம் ஸ்பெஷல்</td><td>200.00</td><td class="rate">50.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>436</td><td>Ground Chakkar Asoka</td><td>தரைச்சக்கரம் அசோகா</td><td>160.00</td><td class="rate">40.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>65</td><td>Ground Chakkar Deluxe</td><td>தரைச்சக்கரம் டீலக்ஸ்</td><td>360.00</td><td class="rate">90.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>548</td><td>Ground Chakkar Special (plastic)(regular)</td><td>தரைச்சக்கரம் ஸ்பெஷல் பிளாஸ்டிக் (ரெகுலர்)</td><td>260.00</td><td class="rate">65.00</td><td>10pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>547</td><td>Ground Chakkar Deluxe (plastic)(regular)</td><td>தரைச்சக்கரம் டீலக்ஸ் பிளாஸ்டிக் (ரெகுலர்)</td><td>480.00</td><td class="rate">120.00</td><td>10pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>66</td><td>Butterfly</td><td>பட்டர்ஃளை</td><td>240.00</td><td class="rate">60.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>67</td><td>Bambaram (regular)</td><td>பம்பரம்</td><td>480.00</td><td class="rate">120.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>68</td><td>Lotus Wheel (regular)</td><td>லோட்டஸ் வீல்</td><td>440.00</td><td class="rate">110.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>69</td><td>Disco Wheel</td><td>டிஸ்கோ வீல்</td><td>220.00</td><td class="rate">55.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>70</td><td>Ground Chakkar Puppy (10 Pce)</td><td>தரைச்சக்கரம் பப்பி (10பீஸ்)</td><td>164.00</td><td class="rate">41.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>72</td><td>Ground Chakkar Asoka (krishna)</td><td>சக்கரம் அசோகா (கிருஷ்ணா)</td><td>251.00</td><td class="rate">63.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>75</td><td>Spinner Mega Deluxe Chakkar (krishna)</td><td>ஸ்பின்னர் மெகா டீலக்ஸ் சக்கரம் (கிருஷ்ணா)</td><td>808.00</td><td class="rate">202.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>77</td><td>Jil Jil Fancy Wheel</td><td>ஜில் ஜில் பேன்சி வீல்</td><td>400.00</td><td class="rate">100.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>78</td><td>Jolly Wheel</td><td>ஜாளி வீல்</td><td>365.00</td><td class="rate">92.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>81</td><td>Flora Wheel</td><td>ஃளோரா வீல்</td><td>690.00</td><td class="rate">173.00</td><td>4 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>83</td><td>Ground Chakkar Asoka (asok)</td><td>தரைச்சக்கரம் அசோகா (அசோக்)</td><td>440.00</td><td class="rate">110.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>84</td><td>Ground Chakkar Deluxe (asok)</td><td>தரைச்சக்கரம் டீலக்ஸ் (அசோக்)</td><td>800.00</td><td class="rate">200.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>85</td><td>Wire Chakkar (asok)</td><td>வயர் சக்கரம் (அசோக்)</td><td>800.00</td><td class="rate">200.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>86</td><td>Tinto Wheel Or Rio Wheel (ayyan)</td><td>டினோ வீல் (அ) ரியோ வீல் (அய்யன்)</td><td>780.00</td><td class="rate">195.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>87</td><td>Lotus Wheel (ayyan)</td><td>லோட்டஸ் வீல் (அய்யன்)</td><td>528.00</td><td class="rate">132.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>88</td><td>Classic Wheel (ayyan)</td><td>கிளாசிக் வீல் (அய்யன்)</td><td>1200.00</td><td class="rate">300.00</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>89</td><td>Ground Chakkar Asoka (sri Vijai Brand)</td><td>சக்கரம் அசோகா (ஸ்ரீ விஜய்)</td><td>220.00</td><td class="rate">55.00</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>436</td><td>Ground Chakker Asoka (regular)</td><td>தரைச்சக்கரம் அசோகா</td><td>160.00</td><td class="rate">40.00</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>479</td><td>Gaint Wheel (raveindra)</td><td>ஜெயிண்ட் வீல் (ரவீந்திரா)</td><td>600.00</td><td class="rate">150.00</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>567</td><td>Ground Chakker Special Plastic (ravindra)</td><td>தரைச்சக்கரம் ஸ்பெஷல் பிளாஸ்டிக் (ரவீந்திரா)</td><td>420.00</td><td class="rate">105.00</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>568</td><td>Ground Chakker Deluxe Plastic (ravindra)</td><td>தரைச்சக்கரம் டீலக்ஸ் பிளாஸ்டிக் (ரவீந்திரா)</td><td>840.00</td><td class="rate">210.00</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>556</td><td>Wire Chakker (mizpath)</td><td>வயர் சக்கரம் (மிஸ்பத்)</td><td>600.00</td><td class="rate">150.00</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>563</td><td>Palnet Wheel (starvel)</td><td>பால்நட் வீல் (ஸ்டார்வெல்)</td><td>800.00</td><td class="rate">200.00</td><td>1 Box(2p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>564</td><td>4x4 Wheel (starvel)</td><td>4x4 வீல் (ஸ்டார்வெல்)</td><td>600.00</td><td class="rate">150.00</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>570</td><td>Bambaram Top Spinner (5pce)(mizpath)</td><td>பம்பரம் டாப் ஸ்பின்னர் (5பீஸ்)(மிஸ்பத்)</td><td>240.00</td><td class="rate">60.00</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>530</td><td>Star Wheel (ayyan)</td><td>ஸ்டார் வீல் (அய்யன்)</td><td>720.00</td><td class="rate">180.00</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>497</td><td>Glittering Wheel (ayyan)</td><td>கிளிட்டரிங் வீல் (அய்யன்)</td><td>800.00</td><td class="rate">200.00</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>503</td><td>Bambaram Top Tucker (5pce)(ayyan)</td><td>பம்பரம் டாப் டக்கர் (5பீஸ்) (அய்யன்)</td><td>360.00</td><td class="rate">90.00</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <tr><td>501</td><td>Cock Tail Spinner (3 Deffrence Colour)</td><td>காக்டைல் ஸ்பின்னர் (3 டிப்ஃரன்ட் கலர்)</td><td>220.00</td><td class="rate">55.00</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
-                <!-- ... All other products would continue here in the same format ... -->
+                <tr><td>62</td><td>Ground Chakkar Big (10 Pce)</td><td>தரைச்சக்கரம் பிக் (10பீஸ்)</td><td>113.00</td><td class="rate">28.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>63</td><td>Ground Chakkar Big (25 Pce)</td><td>தரைச்சக்கரம் பிக் (25பீஸ்)</td><td>270.00</td><td class="rate">67.50</td><td>10pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>64</td><td>Ground Chakkar Special</td><td>தரைச்சக்கரம் ஸ்பெஷல்</td><td>225.00</td><td class="rate">56.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>436</td><td>Ground Chakkar Asoka</td><td>தரைச்சக்கரம் அசோகா</td><td>180.00</td><td class="rate">45.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>65</td><td>Ground Chakkar Deluxe</td><td>தரைச்சக்கரம் டீலக்ஸ்</td><td>405.00</td><td class="rate">101.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>548</td><td>Ground Chakkar Special (plastic)(regular)</td><td>தரைச்சக்கரம் ஸ்பெஷல் பிளாஸ்டிக் (ரெகுலர்)</td><td>293.00</td><td class="rate">73.25</td><td>10pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>547</td><td>Ground Chakkar Deluxe (plastic)(regular)</td><td>தரைச்சக்கரம் டீலக்ஸ் பிளாஸ்டிக் (ரெகுலர்)</td><td>540.00</td><td class="rate">135.00</td><td>10pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>66</td><td>Butterfly</td><td>பட்டர்ஃளை</td><td>270.00</td><td class="rate">67.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>67</td><td>Bambaram (regular)</td><td>பம்பரம்</td><td>540.00</td><td class="rate">135.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>68</td><td>Lotus Wheel (regular)</td><td>லோட்டஸ் வீல்</td><td>495.00</td><td class="rate">123.75</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>69</td><td>Disco Wheel</td><td>டிஸ்கோ வீல்</td><td>248.00</td><td class="rate">62.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>70</td><td>Ground Chakkar Puppy (10 Pce)</td><td>தரைச்சக்கரம் பப்பி (10பீஸ்)</td><td>185.00</td><td class="rate">46.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>72</td><td>Ground Chakkar Asoka (krishna)</td><td>சக்கரம் அசோகா (கிருஷ்ணா)</td><td>282.00</td><td class="rate">70.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>75</td><td>Spinner Mega Deluxe Chakkar (krishna)</td><td>ஸ்பின்னர் மெகா டீலக்ஸ் சக்கரம் (கிருஷ்ணா)</td><td>909.00</td><td class="rate">227.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>77</td><td>Jil Jil Fancy Wheel</td><td>ஜில் ஜில் பேன்சி வீல்</td><td>450.00</td><td class="rate">112.50</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>78</td><td>Jolly Wheel</td><td>ஜாளி வீல்</td><td>411.00</td><td class="rate">102.75</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>81</td><td>Flora Wheel</td><td>ஃளோரா வீல்</td><td>776.00</td><td class="rate">194.00</td><td>4 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>83</td><td>Ground Chakkar Asoka (asok)</td><td>தரைச்சக்கரம் அசோகா (அசோக்)</td><td>495.00</td><td class="rate">123.75</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>84</td><td>Ground Chakkar Deluxe (asok)</td><td>தரைச்சக்கரம் டீலக்ஸ் (அசோக்)</td><td>900.00</td><td class="rate">225.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>85</td><td>Wire Chakkar (asok)</td><td>வயர் சக்கரம் (அசோக்)</td><td>900.00</td><td class="rate">225.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>86</td><td>Tinto Wheel Or Rio Wheel (ayyan)</td><td>டினோ வீல் (அ) ரியோ வீல் (அய்யன்)</td><td>878.00</td><td class="rate">219.50</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>87</td><td>Lotus Wheel (ayyan)</td><td>லோட்டஸ் வீல் (அய்யன்)</td><td>594.00</td><td class="rate">148.50</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>88</td><td>Classic Wheel (ayyan)</td><td>கிளாசிக் வீல் (அய்யன்)</td><td>1350.00</td><td class="rate">337.50</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>89</td><td>Ground Chakkar Asoka (sri Vijai Brand)</td><td>சக்கரம் அசோகா (ஸ்ரீ விஜய்)</td><td>248.00</td><td class="rate">62.00</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td colspan="8" class="category-header">FLOWER POTS - பூச்சட்டி</td></tr>
+                <tr><td>90</td><td>Flower Pot Small</td><td>பூச்சட்டி சிறியது</td><td>180.00</td><td class="rate">45.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>91</td><td>Flower Pot Big</td><td>பூச்சட்டி பெரியது</td><td>225.00</td><td class="rate">56.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>92</td><td>Flower Pot Special (regular)</td><td>பூச்சட்டி ஸ்பெஷல் சிவப்பு</td><td>293.00</td><td class="rate">73.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>93</td><td>Flower Pot Asoka</td><td>பூச்சட்டி அசோகா</td><td>360.00</td><td class="rate">90.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>94</td><td>Flower Pot Colourkoti</td><td>பூச்சட்டி கலர்கோட்டி</td><td>720.00</td><td class="rate">180.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>95</td><td>Flower Pot Deluxe (5pce)</td><td>பூச்சட்டி டீலக்ஸ்</td><td>630.00</td><td class="rate">157.50</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>96</td><td>Flower Pot Super Deluxe (2 Pce)</td><td>பூச்சட்டி சூப்பர் டீலக்ஸ்</td><td>405.00</td><td class="rate">101.25</td><td>2 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>442</td><td>Mega Colourkoti (regular)</td><td>மெகா கலர்கோட்டி</td><td>1485.00</td><td class="rate">371.25</td><td>10 Ppce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>97</td><td>Ganga Jamuna (flower With Bomb)</td><td>கங்கா ஜமுனா (ஃபளவர் ஃபாம்)</td><td>225.00</td><td class="rate">56.25</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>98</td><td>Multicolor Gaint Flowerpot(5pce)(sri Vijai)</td><td>மல்டிகலர் ஜெயிண்ட் பூச்சட்டி (ஸ்ரீவிஜய்)</td><td>675.00</td><td class="rate">168.75</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>100</td><td>Flower Pot Big (asok)</td><td>பூச்சட்டி பிக் (அசோக்)</td><td>495.00</td><td class="rate">123.75</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>101</td><td>Flower Pot Special (asok Brand)</td><td>பூச்சட்டி ஸ்பெஷல் (அசோக்)</td><td>743.00</td><td class="rate">185.75</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>102</td><td>Flower Pot Asoka (asok Brand)</td><td>பூச்சட்டி அசோகா (அசோக்)</td><td>1125.00</td><td class="rate">281.25</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>105</td><td>Flowerpot Colourkoti (asok)</td><td>பூச்சட்டி கலர்கோட்டி (அசோக்)</td><td>1350.00</td><td class="rate">337.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>106</td><td>Flowerpot Colourkoti Deluxe (asok)</td><td>பூச்சட்டி கலர்கோட்டி டீலக்ஸ் (அசோக்)</td><td>2025.00</td><td class="rate">506.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>107</td><td>Flower Pot Asoka (krishna)</td><td>பூச்சட்டி அசோகா (கிருஷ்ணா)</td><td>1125.00</td><td class="rate">281.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>110</td><td>Mega Flower Pot Tricolour Pot</td><td>மெகா பூச்சட்டி ட்ரை கலர்</td><td>2453.00</td><td class="rate">613.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>114</td><td>Colour Rain Big Size</td><td>கலர் ரெயின் பெரியது</td><td>1924.00</td><td class="rate">481.00</td><td>2 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>118</td><td>Mega Colourchanging Flowerpot</td><td>மெகா கலர்சேஞ்சிங் பூச்சட்டி</td><td>2858.00</td><td class="rate">714.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>119</td><td>Laila Manjunu (flower With Bomb)</td><td>லைலா மஜ்னு (பூ&ஃபாம்)</td><td>405.00</td><td class="rate">101.25</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>569</td><td>Multicolour Gaint (10pce)(sri Vijai)</td><td>மல்டிகலர் ஜெயிண்ட் (ஸ்ரீவிஜய்) 10 பீஸ்</td><td>1350.00</td><td class="rate">337.50</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td colspan="8" class="category-header">TWINKLING STAR - சாட்டை</td></tr>
+                <tr><td>120</td><td>1.5inch Twinkling Star Regular</td><td>1.5' சாட்டை</td><td>81.00</td><td class="rate">20.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>121</td><td>4inch Twinkling Star (regular)</td><td>4' சாட்டை</td><td>270.00</td><td class="rate">67.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>122</td><td>Jil Jil Twinkling Star (karpagaraja)</td><td>ஜில் ஜில் சாட்டை (கற்பகராஜா)</td><td>72.00</td><td class="rate">18.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>123</td><td>Jil Jil Twinkling Red Star (karpagaraja)</td><td>ஜில் ஜில் சிவப்பு சாட்டை (கற்பகராஜா)</td><td>72.00</td><td class="rate">18.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>124</td><td>Jil Jil Twinkling Green Star (karpagaraja)</td><td>ஜில் ஜில் பச்சை சாட்டை (கற்பகராஜா)</td><td>72.00</td><td class="rate">18.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>125</td><td>4inch Twinkling Star (ravindra Or Krishna)</td><td>4' சாட்டை (ரவீந்த்ரா (அ) கிருஷ்ணா)</td><td>450.00</td><td class="rate">112.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>470</td><td>Jil Jil (asok Brand)</td><td>ஜில் ஜில் (அசோக்)</td><td>189.00</td><td class="rate">47.25</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td colspan="8" class="category-header">PENCIL - பென்சில்</td></tr>
+                <tr><td>126</td><td>7inch Pencil (regular)</td><td>7" பென்சில்</td><td>81.00</td><td class="rate">20.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>127</td><td>10inch Pencil (regular)</td><td>10" பென்சில்</td><td>135.00</td><td class="rate">33.75</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>129</td><td>Jog Falls (ravindra)</td><td>ஜோக் ஃபால்ஸ் (ரவீந்த்ரா)</td><td>450.00</td><td class="rate">112.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>130</td><td>Olympic Torches (ravindra)</td><td>ஒளிம்பிக் டார்ச் (ரவீந்த்ரா)</td><td>461.00</td><td class="rate">115.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>131</td><td>Silver Rain Torches (asok)</td><td>சில்வர் ரெயின் டார்ஜ் (அசோக்)</td><td>414.00</td><td class="rate">103.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>132</td><td>Max-100 (Gun)</td><td>மேக்ஸ்-100 (துப்பாக்கி)</td><td>1035.00</td><td class="rate">258.75</td><td>2 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>134</td><td>Musical Torch (ravindra)</td><td>மியூசிக்கல் டார்ச் (ரவீந்திரா)</td><td>684.00</td><td class="rate">171.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>135</td><td>50 Second Torch (krishna)</td><td>50 நொடி டார்ச் (கிருஷ்ணா)</td><td>450.00</td><td class="rate">112.50</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>426</td><td>Red Flare 100 Second Torch (krishna)</td><td>சிவப்பு ஃப்ளேர் 100 நொடி டார்ச் (கிருஷ்ணா)</td><td>900.00</td><td class="rate">225.00</td><td>5 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>136</td><td>18inch Pencil</td><td>18"பென்சில்</td><td>270.00</td><td class="rate">67.50</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>137</td><td>12inch Pencil</td><td>12"பென்சில்</td><td>171.00</td><td class="rate">42.75</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>138</td><td>15inch Magic Pencil</td><td>15"மேஜிக் பென்சில்</td><td>225.00</td><td class="rate">56.25</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>142</td><td>Colour Smoke (normal)</td><td>கலர் புகை</td><td>675.00</td><td class="rate">168.75</td><td>3 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>143</td><td>Colour Smoke (krishna) (green,yellow,orange)</td><td>கலர் புகை (கிருஷ்ணா) (பச்சை,மஞ்சள்,ஆரஞ்சு)</td><td>788.00</td><td class="rate">197.00</td><td>2 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>144</td><td>Rainbow (3 In 1) Smoke</td><td>ரெயின்போ (3இன்1) புகை</td><td>1181.00</td><td class="rate">295.25</td><td>3 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>583</td><td>Yog Smoking Ship (3 In 1)</td><td>யோக் புகை சிப் (3இன்1)</td><td>1491.00</td><td class="rate">372.75</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>545</td><td>Selfi Stick (3pce)</td><td>செல்ஃபி ஸ்டிக் (3பீஸ்)</td><td>158.00</td><td class="rate">39.50</td><td>1 Box(3p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>572</td><td>Sivakasi Crackling Torch (2pce)</td><td>சிவகாசி கிராக்ளிங் டார்ச் (2பீஸ்)</td><td>743.00</td><td class="rate">185.75</td><td>1 Box(2p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>573</td><td>Ultra Pencil (3pce)</td><td>அல்ட்ரா பென்சில் (3பீஸ்)</td><td>248.00</td><td class="rate">62.00</td><td>1 Box(3p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td colspan="8" class="category-header">ROCKET - ராக்கெட்</td></tr>
+                <tr><td>145</td><td>Baby Rocket</td><td>பேபி ராக்கெட்</td><td>135.00</td><td class="rate">33.75</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>146</td><td>Rocket</td><td>ராக்கெட்</td><td>203.00</td><td class="rate">50.75</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>147</td><td>Rocket Bomb</td><td>ராக்கெட் பாம்</td><td>270.00</td><td class="rate">67.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>148</td><td>Zigma/lunk Rocket/ 3 Sound Rocket</td><td>ஜிக்மா ராக்கெட்/3 சவுண்ட் ராக்கெட்/லூனிக் ராக்கெட்</td><td>405.00</td><td class="rate">101.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>150</td><td>Echo Rocket (sri Vijai) (whistling)</td><td>எக்கோ ராக்கெட் (ஸ்ரீவிஜய்) விசில்</td><td>585.00</td><td class="rate">146.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>151</td><td>10 Colour Rocket</td><td>10 கலர் ராக்கெட்</td><td>1350.00</td><td class="rate">337.50</td><td>6 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>152</td><td>Challenger Rocket (10 Pce)(ravindra)</td><td>சேலஞ்சர் ராக்கெட் (ரவீந்த்ரா)</td><td>1103.00</td><td class="rate">275.75</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>153</td><td>Air Whizling Rocket (ayyan)</td><td>ஏர் விசிளிங் ராக்கெட் (அய்யன்)</td><td>557.00</td><td class="rate">139.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>154</td><td>Colour Rocket (sri Vijai)</td><td>கலர் ராக்கெட் (ஸ்ரீவிஜய்)</td><td>270.00</td><td class="rate">67.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>155</td><td>Space Shuttle Rocket (asok)</td><td>ஸ்பேஸ் சட்டில் ராக்கெட் (அசோக்)</td><td>810.00</td><td class="rate">202.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>156</td><td>Hanuman Kada Rocket (multicolour)</td><td>ஹனுமான் கடா ராக்கெட் (மல்டிகலர்)</td><td>1800.00</td><td class="rate">450.00</td><td>6 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>157</td><td>Parachute Rocket (ayyan)</td><td>பாராசூட் ராக்கெட் (அய்யன்)</td><td>1800.00</td><td class="rate">450.00</td><td>4 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>584</td><td>Sympony Rocket</td><td>சிம்போனி ராக்கெட்</td><td>1013.00</td><td class="rate">253.25</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>574</td><td>Rocket Bomb (ravindra)</td><td>ராக்கெட் பாம் (ரவீந்த்ரா)</td><td>450.00</td><td class="rate">112.50</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td colspan="8" class="category-header">BOMB - அனுகுண்டு</td></tr>
+                <tr><td>159</td><td>Prince Bullet Bomb (rajan)</td><td>பிரின்ஸ் புல்லட் பாம் (ராஜன்)</td><td>81.00</td><td class="rate">20.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>161</td><td>Bullet Bomb</td><td>புல்லட் பாம்</td><td>90.00</td><td class="rate">22.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>162</td><td>Atom Bomb Green (krishna)</td><td>ஆட்டம் பாம் பச்சை (கிருஷ்ணா)</td><td>257.00</td><td class="rate">64.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>163</td><td>Hydro Bomb Green</td><td>ஹைட்ரோ பாம் பச்சை</td><td>248.00</td><td class="rate">62.00</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>164</td><td>Classic Bomb Green (3ply)</td><td>கிளாசிக் பாம் பச்சை (3ஃப்ளை)</td><td>338.00</td><td class="rate">84.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>165</td><td>King Kong Bomb Green (5ply)</td><td>கிங் காங் பாம் பச்சை (5ஃப்ளை)</td><td>405.00</td><td class="rate">101.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>168</td><td>Out Pocket Bomb (10pce)</td><td>அவுட் பாக்கெட் பாம் (10 பீஸ்)</td><td>450.00</td><td class="rate">112.50</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>169</td><td>King Rider Big Bomb</td><td>கிங் ரைடர் பெரிய பாம்</td><td>1193.00</td><td class="rate">298.25</td><td>10 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>170</td><td>Big Bomb</td><td>பெரிய பாம்</td><td>518.00</td><td class="rate">129.50</td><td>4 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>172</td><td>Hydro Bomb (asok)</td><td>ஹைட்ரோ பாம் (அசோக்)</td><td>365.00</td><td class="rate">91.25</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>173</td><td>Classic Bomb (asok)</td><td>கிளாசிக் பாம் (அசோக்)</td><td>675.00</td><td class="rate">168.75</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>174</td><td>Dinosaur Bomb</td><td>டைனோசர் பாம்</td><td>675.00</td><td class="rate">168.75</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>571</td><td>Digital Bomb(10pce)</td><td>டிஜிட்டல் பாம் (10 பீஸ்)</td><td>900.00</td><td class="rate">225.00</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>593</td><td>Dynamic Bomb(ravindra)</td><td>டைனமிக் பாம் (ரவீந்த்ரா)</td><td>675.00</td><td class="rate">168.75</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td colspan="8" class="category-header">BIJILI & LAKSHMI CRACKERS - பிஜிலி & லட்சுமி வெடி</td></tr>
+                <tr><td>175</td><td>Red.bijili (50 Pce)(regular)</td><td>சிவப்பு பிஜிளி (50 பீஸ்)</td><td>54.00</td><td class="rate">13.50</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>177</td><td>Red(or)steipped.bijili (100pce)(gold)</td><td>சிவப்பு(அ)கோடு பிஜிளி(100பீஸ்) (கோல்டு)</td><td>113.00</td><td class="rate">28.25</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>181</td><td>Stripped Bijili (50 Pce)(asok)</td><td>கோடு பிஜிளி (50பீஸ்) (அசோக்)</td><td>158.00</td><td class="rate">39.50</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>182</td><td>Stripped Bijili (100 Pce)(asok)</td><td>கோடு பிஜிளி (100பீஸ்) (அசோக்)</td><td>270.00</td><td class="rate">67.50</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>183</td><td>Bijili 50 Pce (ravindra)</td><td>பிஜிளி (50பீஸ்) (ரவீந்த்ரா)</td><td>270.00</td><td class="rate">67.50</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>186</td><td>Vikram Special (krishna)</td><td>விக்ரம் ஸ்பெஷல் (கிருஷ்ணா)</td><td>495.00</td><td class="rate">123.75</td><td>1 Pkt (25p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>188</td><td>2.75inch Kuruvi (regular)</td><td>2.75" குருவி</td><td>27.00</td><td class="rate">6.75</td><td>1 Pkt(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>189</td><td>2.75inch Kuruvi (ravindra)</td><td>2.75" குருவி (ரவீந்த்ரா)</td><td>63.00</td><td class="rate">15.75</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>190</td><td>3.5inch Laksmi Or Ben 10 (6paper)</td><td>3.5” லட்சுமி (அ) பென்10 (6பேப்பர்)</td><td>45.00</td><td class="rate">11.25</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>191</td><td>4inch Lakshmi Or Ben 10 (8 Paper)</td><td>4” லட்சுமி (அ) பென்10 (8பேப்பர்)</td><td>68.00</td><td class="rate">17.00</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>192</td><td>4inch Gold (10 Paper)</td><td>4” கோல்டு (10 பேப்பர்)</td><td>135.00</td><td class="rate">33.75</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>193</td><td>4inch Deluxe (12 Paper)</td><td>4” டீலக்ஸ் (12 பேப்பர்)</td><td>113.00</td><td class="rate">28.25</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>194</td><td>5inch Mega (14 Paper)</td><td>5" மெகா (14 பேப்பர்)</td><td>158.00</td><td class="rate">39.50</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>197</td><td>6inch Mega (16 Paper)</td><td>6" மெகா (16பேப்பர்)</td><td>189.00</td><td class="rate">47.25</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>198</td><td>5 Inch Sivaji (20 Paper)</td><td>5” சிவாஜி (20பேப்பர்)</td><td>248.00</td><td class="rate">62.00</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>199</td><td>Two Sound (krishna Brand)</td><td>2 சவுண்ட்</td><td>158.00</td><td class="rate">39.50</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>200</td><td>Adiyal (30 Paper)</td><td>அடியாள் (30பேப்பர்)</td><td>180.00</td><td class="rate">45.00</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>201</td><td>Adiyal (80 Paper)</td><td>அடியாள் (80பேப்பர்)</td><td>360.00</td><td class="rate">90.00</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>202</td><td>Jack Pot (money)</td><td>ஜாக்பாட் (பணம்)</td><td>1035.00</td><td class="rate">258.75</td><td>1 Box(2p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>203</td><td>1 Kg</td><td>1 கிலோ</td><td>720.00</td><td class="rate">180.00</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>205</td><td>Sandiyar 1(50 Paper)</td><td>சண்டியர் (50பேப்பர்)</td><td>338.00</td><td class="rate">84.50</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>206</td><td>Robo 1 (18 Paper)</td><td>ரோபோ (18பேப்பர்)</td><td>1350.00</td><td class="rate">337.50</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>207</td><td>Colour Paper (30 Paper)</td><td>கலர் பேப்பர் (30பேப்பர்)</td><td>675.00</td><td class="rate">168.75</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>208</td><td>Basket Bomb</td><td>பேஸ்கட் பாம்</td><td>293.00</td><td class="rate">73.25</td><td>1 Pkt(100p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>432</td><td>Two Sound Crackers (regular)</td><td>2” சவுண்ட் கிராக்கர்ஸ்</td><td>113.00</td><td class="rate">28.25</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>467</td><td>Robo 2.0</td><td>ரோபோ 2.0</td><td>1800.00</td><td class="rate">450.00</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>485</td><td>4inch Deluxe Colour Crackers (25pce)</td><td>4” டீலக்ஸ் கலர் கிராக்கர்ஸ் (25 பீஸ்)</td><td>450.00</td><td class="rate">112.50</td><td>1 Pkt(25p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>486</td><td>4inch Gold Lakshmi Special (vadakampatti)</td><td>4” கோல்டு லட்சுமி ஸ்பெஷல் (வடக்கம்பட்டி)</td><td>234.00</td><td class="rate">58.50</td><td>1 Pkt(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>488</td><td>Chotta King Rider Bomb (10pce)</td><td>சோட்டா கிங் ரைடர் பாம் (10 பீஸ்)</td><td>675.00</td><td class="rate">168.75</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>489</td><td>Sandiyar 2</td><td>சண்டியர் 2</td><td>675.00</td><td class="rate">168.75</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>490</td><td>Udumban (10pce)</td><td>உடும்பன் (10 பீஸ்)</td><td>338.00</td><td class="rate">84.50</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>500</td><td>4inch Deluxe Raasi Special (5pce)</td><td>4” டீலக்ஸ் ராசி ஸ்பெஷல் (5 பீஸ்)</td><td>180.00</td><td class="rate">45.00</td><td>1 Pkt(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>560</td><td>Money In The Bank (starvel)</td><td>பணம் இன் த பேங்க் (ஸ்டார் வெல்)</td><td>788.00</td><td class="rate">197.00</td><td>1 Box(3p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>561</td><td>Sound Party (starvel)</td><td>சவுண்ட் பார்ட்டி (ஸ்டார் வெல்)</td><td>675.00</td><td class="rate">168.75</td><td>1 Box(3p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>566</td><td>2.75 inch Kuruvi (raasi)</td><td>2.75" குருவி (ராசி)</td><td>72.00</td><td class="rate">18.00</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>534</td><td>Vikram Special (krishna)</td><td>விக்ரம் ஸ்பெஷல் (கிருஷ்ணா)</td><td>495.00</td><td class="rate">123.75</td><td>1 Pkt</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td colspan="8" class="category-header">CHILDREN SPL NOVELTIES - குழந்தைகள் ஸ்பெஷல் வெடிகள்</td></tr>
+                <tr><td>210</td><td>Stone</td><td>ஸ்டோன்</td><td>23.00</td><td class="rate">5.75</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>211</td><td>Magic Pop</td><td>மஜிக் பாப்</td><td>17.00</td><td class="rate">4.25</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>212</td><td>Green Stone</td><td>பச்சை ஸ்டோன்</td><td>36.00</td><td class="rate">9.00</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>214</td><td>Cartoon (regular)</td><td>கார்டூன்</td><td>68.00</td><td class="rate">17.00</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>215</td><td>Snake Cartoon</td><td>பாம்பு கார்டூன்</td><td>180.00</td><td class="rate">45.00</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>217</td><td>White Flash (regular)</td><td>ஒயிட் ஃபிளாஷ்</td><td>182.00</td><td class="rate">45.50</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>222</td><td>Chutt Putt (ravindra)</td><td>சிட் புட் (ரவீந்த்ரா)</td><td>326.00</td><td class="rate">81.50</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>223</td><td>Kit Kat</td><td>கிட் கட்</td><td>81.00</td><td class="rate">20.25</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>225</td><td>Helicopter (ravindra)</td><td>ஹெலிகாப்டர் (ரவீந்த்ரா)</td><td>315.00</td><td class="rate">78.75</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>226</td><td>Helicopter (colour Changing)</td><td>ஹெலிகாப்டர் (கலர் சேன்ஜிங்)</td><td>338.00</td><td class="rate">84.50</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>227</td><td>Sizzelers (multicolour)</td><td>சிஸ்லர்ஸ்</td><td>450.00</td><td class="rate">112.50</td><td>1 Box(1p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>229</td><td>Helicopter (ayyan)</td><td>ஹெலிகாப்டர் (அய்யன்)</td><td>338.00</td><td class="rate">84.50</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>231</td><td>Drone</td><td>ட்ரோன்</td><td>630.00</td><td class="rate">157.50</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>233</td><td>Jolly Bobby</td><td>ஜாளி பாப்பி</td><td>1800.00</td><td class="rate">450.00</td><td>1 Box(3p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>235</td><td>Beverages (4 Varities) Tin</td><td>பெவரேஜ் (4 வகை)</td><td>315.00</td><td class="rate">78.75</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>236</td><td>Welcome Shower Mix (4 Varities)</td><td>வெல்கம் சவர் மிக்ஸ் (4 வகை)</td><td>779.00</td><td class="rate">194.75</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>237</td><td>Shaan, Minimini, Pokemon (3 Varities)</td><td>சான்,மினிமினி,போகிமேன் (3 வகை)</td><td>306.00</td><td class="rate">76.50</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>239</td><td>Peacock (five Face)(regular)</td><td>மயில் (5 முகம்)</td><td>675.00</td><td class="rate">168.75</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>240</td><td>Peacock (three Face)(regular)</td><td>மயில் (3 முகம்)</td><td>675.00</td><td class="rate">168.75</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>241</td><td>Peacock (five Face)(ravindra)3 Varities</td><td>மயில் (5 முகம்) 3 வகை (ரவீந்த்ரா)</td><td>855.00</td><td class="rate">213.75</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>242</td><td>Asrafic (gold,angel)ravindra 2 Varities</td><td>அசரபி (கோல்டு, ஏஞ்சல்) 2 வகை (ரவீந்த்ரா)</td><td>698.00</td><td class="rate">174.50</td><td>1 Box(3p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>243</td><td>Tricolour Fountation</td><td>ட்ரைகலர் பவுண்டைன்</td><td>968.00</td><td class="rate">242.00</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>244</td><td>Shower (5 In 1)</td><td>சவர் (5இன்1)</td><td>315.00</td><td class="rate">78.75</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>247</td><td>Magic Whips</td><td>மேஜிக் விப்ஸ்</td><td>563.00</td><td class="rate">140.75</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>248</td><td>Kunfu Bada</td><td>குங்ஃபூ படா</td><td>270.00</td><td class="rate">67.50</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>249</td><td>1000 Riders (golden Crackling)</td><td>1000 ரைடர் (கோல்டன் கிராக்ளிங்)</td><td>720.00</td><td class="rate">180.00</td><td>1 Box(3p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>250</td><td>Micky Multicolour</td><td>மிக்கி மல்டிகலர்</td><td>236.00</td><td class="rate">59.00</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>251</td><td>Dragon Shower</td><td>ட்ராகன் சவர்</td><td>324.00</td><td class="rate">81.00</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>252</td><td>Fire Drops (3 Varities)</td><td>பயர் ட்ராப்ஸ்</td><td>270.00</td><td class="rate">67.50</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>253</td><td>Jadugar Or Manoranjan</td><td>ஜாக்குவார் (அ) மனோராஜன்</td><td>1350.00</td><td class="rate">337.50</td><td>1 Box(4p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>254</td><td>1000 To 2000</td><td>1000-2000</td><td>1148.00</td><td class="rate">287.00</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>255</td><td>Colour Cone</td><td>கலர் கோன்</td><td>1350.00</td><td class="rate">337.50</td><td>1 Box(2p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>256</td><td>Electric Stone (krishna)</td><td>எலக்ட்ரிக் ஸ்டோன் (கிருஷ்ணா)</td><td>144.00</td><td class="rate">36.00</td><td>1 Box(10p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>257</td><td>Mini Bulls</td><td>மினி புல்ஸ்</td><td>900.00</td><td class="rate">225.00</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>258</td><td>Pop Corn (krishna)</td><td>பாப் கார்ன் (கிருஷ்ணா)</td><td>900.00</td><td class="rate">225.00</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>259</td><td>1000 Watts (crakling King)</td><td>1000 வாட்ஸ் (கிராக்ளிங் கிங்)</td><td>1913.00</td><td class="rate">478.25</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>260</td><td>Angry Bird</td><td>ஆங்க்ரி பேர்டு</td><td>540.00</td><td class="rate">135.00</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>261</td><td>Dinosaur Shower</td><td>டைனோசர் சவர்</td><td>675.00</td><td class="rate">168.75</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>262</td><td>4inch Tin (krishna Brand)</td><td>4” டின் (கிருஷ்ணா)</td><td>450.00</td><td class="rate">112.50</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>263</td><td>6inch Tin (krishna Brand)</td><td>6”டின் (கிருஷ்ணா)</td><td>720.00</td><td class="rate">180.00</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>264</td><td>8inch Tin (krishna Brand)</td><td>8”டின் (கிருஷ்ணா)</td><td>900.00</td><td class="rate">225.00</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>578</td><td>6inch Tin (power King)</td><td>6”டின் (பவர் கிங்)</td><td>810.00</td><td class="rate">202.50</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>581</td><td>8inch Tin (power King)</td><td>8”டின் (பவர் கிங்)</td><td>1125.00</td><td class="rate">281.25</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>265</td><td>Big Show (vijai)</td><td>பிக் சோ (ஸ்ரீவிஜய்)</td><td>675.00</td><td class="rate">168.75</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>266</td><td>Emerald</td><td>எமரால்ட்</td><td>203.00</td><td class="rate">50.75</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>267</td><td>Mantra Stick White</td><td>மந்த்ரா ஸ்டிக் ஒயிட்</td><td>68.00</td><td class="rate">17.00</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>268</td><td>Mantra Stick Red(or)green</td><td>மந்த்ரா ஸ்டிக் சிவப்பு (அ) பச்சை</td><td>113.00</td><td class="rate">28.25</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>269</td><td>Elaikiya Multicolour</td><td>எலக்கியா மல்டிகலர்</td><td>1800.00</td><td class="rate">450.00</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>270</td><td>Water Queen</td><td>வாட்டர் குயின்</td><td>450.00</td><td class="rate">112.50</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>271</td><td>Bada Peacock (srivijai Or Ayyan)</td><td>மயில் பெரியது (ஸ்ரீவிஜய்(அ) அய்யன்)</td><td>1800.00</td><td class="rate">450.00</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>272</td><td>Golden Down</td><td>கோல்டன் டவுன்</td><td>833.00</td><td class="rate">208.25</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>273</td><td>Pokeman 2.0 Cool Shower</td><td>போகிமேன் 2.0 கூல் சவர்</td><td>675.00</td><td class="rate">168.75</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>274</td><td>Emmu Koli Double Function</td><td>கோழி டபுள் பங்க்சன்</td><td>765.00</td><td class="rate">191.25</td><td>1 Box(2p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>275</td><td>White House (sri Vijai)</td><td>ஒயிட் ஹவுஸ் (ஸ்ரீவிஜய்)</td><td>495.00</td><td class="rate">123.75</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>276</td><td>Fizz Wizz (sri Vijai)(butterfly)</td><td>ஃபிள் விஸ் (ஸ்ரீவிஜய்) பட்டர்ஃளை</td><td>495.00</td><td class="rate">123.75</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>422</td><td>Peacock Tail</td><td>மயில் டைள்</td><td>675.00</td><td class="rate">168.75</td><td>1 Box(2p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>423</td><td>Instagram</td><td>இன்ஸ்டாகிராம்</td><td>540.00</td><td class="rate">135.00</td><td>1 Box(2p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>424</td><td>Pop-corn (tin)(balagurusamy)</td><td>பாப் கான் (டின்) பாலகுருசாமி</td><td>540.00</td><td class="rate">135.00</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>425</td><td>Dazzle</td><td>டசில்</td><td>1575.00</td><td class="rate">393.75</td><td>1 Box(3p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>426</td><td>100 Second Torch</td><td>100 நொடி பென்சில்</td><td>900.00</td><td class="rate">225.00</td><td>1 Box</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>427</td><td>Lolipop (starvel)</td><td>லாலி பாப் (ஸ்டார் வெல்)</td><td>990.00</td><td class="rate">247.50</td><td>1 Box(5p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>428</td><td>Kinder Pop</td><td>கின்டர் பாப்</td><td>900.00</td><td class="rate">225.00</td><td>1 Box(6p)</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <tr><td>429</td><td>Laser Peacock (krishna)</td><td>லேசர் மயில் (கிருஷ்ணா)</td><td>900.00</td><td class="rate">225.00</td><td>1 Pce</td><td><input type="number" class="quantity-input" min="0"></td><td><input type="text" class="amount-output" readonly></td></tr>
+                <!-- ... All other products would continue in the same format ... -->
             </tbody>
         </table>
     </div>
@@ -297,17 +424,6 @@
             <span id="grandTotal">0.00</span>
         </div>
         <button id="generatePdfBtn">Generate PDF</button>
-    </div>
-
-    <div class="payment-details">
-        <h2>Payment Details</h2>
-        <p>G pay or phone pe: 9952732777, 8220693192</p>
-        <p>State Bank Of India</p>
-        <p>AccNo: 31492853796</p>
-        <p>Branch: Thiruthangal</p>
-        <p>Name: K Praveenkumar</p>
-        <p>IFS Code: SBIN0012767</p>
-        <p>MICR code: 626002025</p>
     </div>
 </div>
 
@@ -357,24 +473,39 @@
             // --- PDF Header ---
             doc.setFontSize(20);
             doc.setFont('helvetica', 'bold');
-            doc.text("Jithu Crackers", doc.internal.pageSize.getWidth() / 2, 20, { align: 'center' });
+            doc.text("Jithu Crackers", 15, 20);
             
             doc.setFontSize(10);
             doc.setFont('helvetica', 'normal');
-            doc.text("No.50, N S street, Sivakasi.", doc.internal.pageSize.getWidth() / 2, 27, { align: 'center' });
-            doc.text("Phone No: 9952732777", doc.internal.pageSize.getWidth() / 2, 32, { align: 'center' });
+            doc.text("No.50, N S street, Sivakasi.", 15, 27);
+            doc.text("Phone No: 9952732777", 15, 32);
+            
+            // --- Payment Details in Header ---
+            const paymentX = 110;
+            doc.setFontSize(11);
+            doc.setFont('helvetica', 'bold');
+            doc.text("Payment Details", paymentX, 20);
+            doc.setFontSize(9);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`G pay/Phone Pe: 9952732777, 8220693192`, paymentX, 26);
+            doc.text(`Bank: State Bank Of India | K Praveenkumar`, paymentX, 31);
+            doc.text(`Acc No: 31492853796`, paymentX, 36);
+            doc.text(`Branch: Thiruthangal | IFS: SBIN0012767`, paymentX, 41);
+            
+            doc.setLineWidth(0.5);
+            doc.line(10, 48, 200, 48);
             
             // --- Customer Details ---
             doc.setFontSize(12);
             doc.setFont('helvetica', 'bold');
-            doc.text("Order For:", 15, 45);
+            doc.text("Order For:", 15, 58);
             doc.setFont('helvetica', 'normal');
-            doc.text(`Name: ${customerName || 'N/A'}`, 15, 52);
-            doc.text(`Address: ${customerAddress || 'N/A'}`, 15, 59);
-            doc.text(`Phone: ${customerPhone || 'N/A'}`, 15, 66);
+            doc.text(`Name: ${customerName || 'N/A'}`, 15, 65);
+            doc.text(`Address: ${customerAddress || 'N/A'}`, 15, 72);
+            doc.text(`Phone: ${customerPhone || 'N/A'}`, 15, 79);
             
-            doc.text(`Date: ${orderDate || new Date().toLocaleDateString()}`, 140, 52);
-            doc.text(`Ref. By: ${refBy || 'N/A'}`, 140, 59);
+            doc.text(`Date: ${orderDate || new Date().toLocaleDateString()}`, 140, 65);
+            doc.text(`Ref. By: ${refBy || 'N/A'}`, 140, 72);
 
             // --- Products Table ---
             const tableData = [];
@@ -400,9 +531,9 @@
                 doc.autoTable({
                     head: [tableHeaders],
                     body: tableData,
-                    startY: 75,
+                    startY: 88,
                     headStyles: { fillColor: [40, 40, 40] },
-                    styles: { fontSize: 8 },
+                    styles: { fontSize: 8, cellPadding: 1.5 },
                     columnStyles: {
                         0: { cellWidth: 15 },
                         1: { cellWidth: 80 },
@@ -414,36 +545,17 @@
 
                 // --- Grand Total ---
                 let finalY = doc.lastAutoTable.finalY + 10;
+                if (finalY > 280) { // Check if new page is needed for total
+                    doc.addPage();
+                    finalY = 20;
+                }
                 const grandTotal = document.getElementById('grandTotal').textContent;
                 doc.setFontSize(14);
                 doc.setFont('helvetica', 'bold');
                 doc.text(`GRAND TOTAL: Rs. ${grandTotal}`, doc.internal.pageSize.getWidth() - 15, finalY, { align: 'right' });
 
-                // --- Payment Details ---
-                finalY += 15;
-                 if (finalY > 260) { // Add new page if not enough space
-                    doc.addPage();
-                    finalY = 20;
-                }
-                doc.setFontSize(12);
-                doc.setFont('helvetica', 'bold');
-                doc.text("Payment Details", 15, finalY);
-                doc.setLineWidth(0.5);
-                doc.line(15, finalY + 1, 55, finalY + 1);
-                
-                doc.setFontSize(10);
-                doc.setFont('helvetica', 'normal');
-                let paymentY = finalY + 8;
-                doc.text(`G pay or phone pe: 9952732777, 8220693192`, 15, paymentY);
-                doc.text(`Bank: State Bank Of India`, 15, paymentY + 5);
-                doc.text(`Account Name: K Praveenkumar`, 15, paymentY + 10);
-                doc.text(`Account No: 31492853796`, 15, paymentY + 15);
-                doc.text(`Branch: Thiruthangal`, 15, paymentY + 20);
-                doc.text(`IFS Code: SBIN0012767`, 15, paymentY + 25);
-                doc.text(`MICR code: 626002025`, 15, paymentY + 30);
-
             } else {
-                doc.text("No items have been selected for the order.", 15, 85);
+                doc.text("No items have been selected for the order.", 15, 95);
             }
 
             // --- Save PDF ---
