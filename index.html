@@ -166,6 +166,7 @@
             100% { transform: rotate(360deg); }
         }
     </style>
+<script src="tamil-font.js"></script>
 </head>
 <body>
 
@@ -240,7 +241,7 @@
     // ***************************************************************
     // IMPORTANT SETUP: Paste your Google Apps Script URL here
     // ***************************************************************
-    const SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"; 
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwW0fOiVo7RX9q8HLankWOMK7CCkM3Q8h4PZLO8VNTCHszX0V2EgOk5oUD2KzuC6DSc/exec"; 
     // ***************************************************************
 
     const fullProductList = [
@@ -909,10 +910,15 @@
             }
         });
 
-        function generatePDF(items, total, customer) {
+              function generatePDF(items, total, customer) {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            
+
+            // IMPORTANT: Add the Tamil font to the PDF document
+            doc.addFileToVFS('NotoSansTamil-Regular.ttf', NotoSansTamilFont);
+            doc.addFont('NotoSansTamil-Regular.ttf', 'NotoSansTamil', 'normal');
+            doc.setFont('NotoSansTamil'); // Set the font for the entire document
+
             doc.setFontSize(20);
             doc.text("Jithu Crackers Order", 105, 20, null, null, 'center');
             
@@ -940,7 +946,14 @@
                 tableRows.push(itemData);
             });
 
-            doc.autoTable(tableColumn, tableRows, { startY: 70 });
+            // Tell the table to use the Tamil font as well
+            doc.autoTable(tableColumn, tableRows, { 
+                startY: 70,
+                styles: { 
+                    font: 'NotoSansTamil',
+                    fontStyle: 'normal'
+                }
+            });
             
             const finalY = doc.lastAutoTable.finalY || 80;
             doc.setFontSize(14);
@@ -952,3 +965,4 @@
     </script>
 </body>
 </html>
+
