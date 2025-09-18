@@ -518,7 +518,7 @@
         { s_no: 274, name: "Emmu Koli Double Function (கோழி டபுள் பங்க்சன்)", rate: 680.00, per: "1 Box(2p)" },
         { s_no: 275, name: "White House (sri Vijai) (ஒயிட் ஹவுஸ் (ஸ்ரீவிஜய்))", rate: 440.00, per: "1 Pce" },
         { s_no: 276, name: "Fizz Wizz (sri Vijai)(butterfly) (ஃபிஸ் விஸ் (ஸ்ரீவிஜய்) பட்டர்ஃபிளை)", rate: 440.00, per: "1 Box" },
-        { s_no: 422, name: "Peacock Tail (மயில் டைல்)", rate: 600.00, per: "1 Box(2p)" },
+        { s_no: 422, name: "Peacock Tail (מייל טייל)", rate: 600.00, per: "1 Box(2p)" },
         { s_no: 423, name: "Instagram (இன்ஸ்டாகிராம்)", rate: 480.00, per: "1 Box(2p)" },
         { s_no: 424, name: "Pop-corn (tin) (balagurusamy) (பாப்-கார்ன் (டின்) பாலகுருசாமி)", rate: 480.00, per: "1 Pce" },
         { s_no: 425, name: "Dazzle (டசில்)", rate: 1400.00, per: "1 Box(3p)" },
@@ -701,7 +701,7 @@
         { s_no: 374, name: "Jumbo Colour Match (ஜம்போ கலர் மேட்ஜ்)", rate: 300.00, per: "1 Box(100p)" },
         { s_no: 375, name: "Dino (டினோ)", rate: 580.00, per: "1 Box(100p)" },
         { s_no: 376, name: "Judo (ஜூடோ)", rate: 360.00, per: "1 Box(100p)" },
-        { s_no: 377, name: "Mega Colour Match (메가 컬러 매치)", rate: 660.00, per: "1 Box(100p)" },
+        { s_no: 377, name: "Mega Colour Match (மெகா கலர் மேட்ஜ்)", rate: 660.00, per: "1 Box(100p)" },
         { s_no: 378, name: "Laptop (லேப்டாப்)", rate: 360.00, per: "1 Box(100p)" },
         { s_no: 379, name: "Globe Mega Match Box (குளோப் மெகா மேட்ஜ் பாக்ஸ்)", rate: 780.00, per: "1 Box" },
         { s_no: 380, name: "Globe Gems Match Box (குளோப் ஜெம்ஸ் மேட்ஜ் பாக்ஸ்)", rate: 340.00, per: "1 Box" },
@@ -785,7 +785,6 @@
                 row.dataset.name = p.name;
                 row.dataset.rate = newRate;
                 row.dataset.per = p.per;
-
                 row.innerHTML = `
                     <td>${p.s_no}</td>
                     <td>${p.name}</td>
@@ -865,7 +864,7 @@
                 // Generate and Download PDF
                 await generatePDF(orderedItems, grandTotal, {customerName, customerEmail, customerPhone, customerAddress});
 
-                statusMessage.textContent = 'PDF generated. Submitting order to spreadsheet...';
+                statusMessage.textContent = 'PDF generated. Submitting order...';
                 
                 // Prepare data for Google Sheets
                 const orderData = {
@@ -875,7 +874,7 @@
                     customerPhone,
                     customerAddress,
                     grandTotal: grandTotal.replace('Total: ₹ ', ''),
-                    items: JSON.stringify(orderedItems.map(item => `${item.name} (Qty: ${item.quantity})`))
+                    items: JSON.stringify(orderedItems.map(item => `${item.quantity} x ${item.name} = ₹${item.amount}`))
                 };
                 
                 if (SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
@@ -973,4 +972,6 @@
     </script>
 </body>
 </html>
+
+
 
