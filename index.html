@@ -764,8 +764,7 @@
         { s_no: 600, name: "120 Shots (Kaalai) (MULTI SKY SHOT VARITIES) (120 சாட்ஸ் (காளை))", rate: 6400.00, per: "1 Box" }
     ];
 
-
-    document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
         const productList = document.getElementById('product-list');
         const grandTotalElem = document.getElementById('grand-total');
         const submitButton = document.getElementById('submitOrder');
@@ -855,9 +854,24 @@
             }
 
             const grandTotal = document.getElementById('grand-total').textContent;
+            
+            // Disable button and show spinner BEFORE PDF generation
+            submitButton.disabled = true;
+            spinner.style.display = 'inline-block';
+            statusMessage.textContent = 'Generating PDF and submitting order...';
+            statusMessage.style.color = 'blue';
 
             // Generate and Download PDF
-            generatePDF(orderedItems, grandTotal, {customerName, customerEmail, customerPhone, customerAddress});
+            try {
+                await generatePDF(orderedItems, grandTotal, {customerName, customerEmail, customerPhone, customerAddress});
+            } catch (pdfError) {
+                console.error("PDF Generation Error:", pdfError);
+                statusMessage.textContent = 'Error creating PDF. Please try again.';
+                statusMessage.style.color = 'red';
+                submitButton.disabled = false;
+                spinner.style.display = 'none';
+                return; // Stop if PDF generation fails
+            }
 
             // Prepare data for Google Sheets
             const orderData = {
@@ -870,12 +884,6 @@
                 items: JSON.stringify(orderedItems.map(item => `${item.name} (Qty: ${item.quantity})`))
             };
 
-            // Disable button and show spinner
-            submitButton.disabled = true;
-            spinner.style.display = 'inline-block';
-            statusMessage.textContent = 'Submitting order...';
-            statusMessage.style.color = 'blue';
-
             try {
                 if(SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"){
                    throw new Error("Google Apps Script URL is not set. Order stored locally only.");
@@ -885,9 +893,7 @@
                     method: 'POST',
                     mode: 'cors',
                     cache: 'no-cache',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(orderData)
                 });
                 
@@ -912,14 +918,20 @@
             }
         });
 
-              function generatePDF(items, total, customer) {
+        async function generatePDF(items, total, customer) {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
 
-            // IMPORTANT: Add the Tamil font to the PDF document
-            doc.addFileToVFS('NotoSansTamil-Regular.ttf', NotoSansTamilFont);
+            // Fetch the Tamil font from Google Fonts server
+            const fontUrl = 'https://fonts.gstatic.com/s/notosanstamil/v29/VYSyax16b270g22a2L61nS42aI5t2jJ-9cW5hS0I-A.ttf';
+            const fontResponse = await fetch(fontUrl);
+            const fontBuffer = await fontResponse.arrayBuffer();
+            const fontBase64 = btoa(new Uint8Array(fontBuffer).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+
+            // Add the font to the PDF
+            doc.addFileToVFS('NotoSansTamil-Regular.ttf', fontBase64);
             doc.addFont('NotoSansTamil-Regular.ttf', 'NotoSansTamil', 'normal');
-            doc.setFont('NotoSansTamil'); // Set the font for the entire document
+            doc.setFont('NotoSansTamil');
 
             doc.setFontSize(20);
             doc.text("Jithu Crackers Order", 105, 20, null, null, 'center');
@@ -947,8 +959,7 @@
                 ];
                 tableRows.push(itemData);
             });
-
-            // Tell the table to use the Tamil font as well
+            
             doc.autoTable(tableColumn, tableRows, { 
                 startY: 70,
                 styles: { 
@@ -967,5 +978,6 @@
     </script>
 </body>
 </html>
+
 
 
