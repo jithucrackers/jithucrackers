@@ -404,14 +404,14 @@
     <div class="container">
         <div class="header">
             <!-- NEW: Group for Logo and Contact Info -->
-                <div class="logo-container">
-                    <img src="./jithucrackers_logo.png" alt="Jithu Crackers Logo" />
-                    <h1>Jithu Crackers</h1>
-                    <h6 class="motto">QUALITY, QUANTITY & TRUST</h6>
-                    <p><strong>Address:</strong> No.50, N S street, Sivakasi.</p>
-                    <p><strong>Phone:</strong> 9952732777</p>
-                </div>
-            
+            <div class="logo-container">
+                <img src="./jithucrackers_logo.png" alt="Jithu Crackers Logo" />
+                <h1>Jithu Crackers</h1>
+                <h6 class="motto">QUALITY, QUANTITY & TRUST</h6>
+                <p><strong>Address:</strong> No.50, N S street, Sivakasi.</p>
+                <p><strong>Phone:</strong> 9952732777</p>
+            </div>
+
             <div class="payment-details">
                 <h3>Payment Details</h3>
                 <div class="payment-columns">
@@ -1130,13 +1130,12 @@
                     whatsappMessage += `--------------------------------\n`;
 
                     orderedItems.forEach(item => {
-                        // Just the name for cleaner formatting
-                        whatsappMessage += `*${item.name}*\n`;
-                        whatsappMessage += `Qty: ${item.quantity}  |  Price: ₹${item.amount}\n`;
+                        whatsappMessage += `*${item.s_no}. ${item.name}*\n`;
+                        whatsappMessage += `Qty: ${item.quantity} | Rate: ₹${item.rate} | Amount: ₹${item.amount}\n`;
                         whatsappMessage += `--------------------------------\n`;
                     });
 
-                    whatsappMessage += `*${grandTotal.replace(':', ':*').replace('₹', '₹ ')}\n`; // Make total bold
+                    whatsappMessage += `*${grandTotal.replace(':', ':*').replace('₹', '₹ ')}\n`;
 
                     const whatsappUrl = `https://wa.me/${OWNER_WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
 
@@ -1166,52 +1165,85 @@
                         const doc = new jsPDF();
                         const pageWidth = doc.internal.pageSize.getWidth();
 
+                        // --- PDF Header ---
                         doc.setFont("helvetica", "bold");
-                        doc.setFontSize(22);
+                        doc.setFontSize(28);
                         doc.setTextColor('#D32F2F');
-                        doc.text("Jithu Crackers", pageWidth / 2, 20, { align: 'center' });
+                        doc.text("Jithu Crackers", pageWidth / 2, 22, { align: 'center' });
 
                         doc.setFont("helvetica", "normal");
-                        doc.setFontSize(12);
+                        doc.setFontSize(14);
+                        doc.setTextColor('#333333');
+                        doc.text("Order Invoice", pageWidth / 2, 32, { align: 'center' });
+
+                        // --- Customer Details (Two-Column Layout) ---
+                        doc.setFont("helvetica", "bold");
+                        doc.setFontSize(11);
                         doc.setTextColor('#000000');
-                        doc.text("Order Invoice", pageWidth / 2, 28, { align: 'center' });
+                        doc.text("Bill To:", 14, 50);
+                        doc.text("Invoice Details:", 110, 50);
 
+                        doc.setFont("helvetica", "normal");
                         doc.setFontSize(10);
-                        doc.text(`Date: ${new Date().toLocaleDateString()}`, 15, 45);
 
-                        let customerDetails = `Customer: ${customer.customerName}\nEmail: ${customer.customerEmail}\nPhone: ${customer.customerPhone}\nAddress: ${customer.customerAddress}`;
+                        // Left Column
+                        const billToText = `${customer.customerName}\n${customer.customerAddress}`;
+                        doc.text(billToText, 14, 57);
 
-                        doc.text(customerDetails, 15, 55);
+                        // Right Column
+                        let invoiceDetailsText = `Date: ${new Date().toLocaleDateString()}\n`;
+                        invoiceDetailsText += `Email: ${customer.customerEmail}\n`;
+                        invoiceDetailsText += `Phone: ${customer.customerPhone}`;
+                        if (customer.referenceBy) {
+                            invoiceDetailsText += `\nReference: ${customer.referenceBy}`;
+                        }
+                        doc.text(invoiceDetailsText, 110, 57);
 
-                        const tableColumn = ["S.No.", "Product Name", "Rate (₹)", "Per", "Qty", "Amount (₹)"];
-                        const tableRows = [];
-
-                        items.forEach(item => {
-                            const itemData = [
-                                item.s_no,
-                                item.name.replace(/[^a-zA-Z0-9\s-().']/g, ''),
-                                item.rate,
-                                item.per,
-                                item.quantity,
-                                item.amount
-                            ];
-                            tableRows.push(itemData);
-                        });
+                        // --- Order Table ---
+                        const tableColumn = ["S.No.", "Product Name", "Rate (Rs.)", "Per", "Qty", "Amount (Rs.)"];
+                        const tableRows = items.map(item => [
+                            item.s_no,
+                            item.name.replace(/[^a-zA-Z0-9\s-().']/g, ''),
+                            item.rate,
+                            item.per,
+                            item.quantity,
+                            item.amount
+                        ]);
 
                         doc.autoTable({
-                            head: [tableColumn], body: tableRows, startY: 80, theme: 'grid',
-                            headStyles: { fillColor: [211, 47, 47], textColor: [255, 255, 255], fontStyle: 'bold' }
+                            head: [tableColumn],
+                            body: tableRows,
+                            startY: 85,
+                            theme: 'striped',
+                            headStyles: {
+                                fillColor: [211, 47, 47],
+                                textColor: [255, 255, 255],
+                                fontStyle: 'bold',
+                                halign: 'center'
+                            },
+                            columnStyles: {
+                                0: { halign: 'center', cellWidth: 15 },
+                                1: { halign: 'left', cellWidth: 75 },
+                                2: { halign: 'right' },
+                                3: { halign: 'center' },
+                                4: { halign: 'center' },
+                                5: { halign: 'right' }
+                            }
                         });
 
                         const finalY = doc.lastAutoTable.finalY;
-                        doc.setFontSize(16);
-                        doc.setFont("helvetica", "bold");
-                        doc.text(total.replace('₹', 'Rs.'), pageWidth - 15, finalY + 15, { align: 'right' });
 
+                        // --- Grand Total ---
+                        doc.setFontSize(18);
+                        doc.setFont("helvetica", "bold");
+                        doc.text(total.replace('₹', 'Total: Rs. '), pageWidth - 14, finalY + 20, { align: 'right' });
+
+                        // --- PDF Footer ---
                         const pageHeight = doc.internal.pageSize.getHeight();
                         doc.setFontSize(10);
-                        doc.setFont("helvetica", "normal");
-                        doc.text("Thank you for your business!", pageWidth / 2, pageHeight - 15, { align: 'center' });
+                        doc.setFont("helvetica", "italic");
+                        doc.setTextColor('#555555');
+                        doc.text("Thank you for your business!", pageWidth / 2, pageHeight - 10, { align: 'center' });
 
                         doc.save(`Jithu_Crackers_Order_${customer.customerName.replace(/\s/g, '_')}.pdf`);
                         resolve();
@@ -1224,6 +1256,5 @@
         });
     </script>
 </body>
-
 
 </html>
