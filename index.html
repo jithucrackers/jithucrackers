@@ -1104,7 +1104,7 @@
                     // Prepare the data once for both email and WhatsApp
                     let orderDetailsText = "";
                     orderedItems.forEach(item => {
-                        orderDetailsText += `- ${item.name}\n  (Qty: ${item.quantity}, Price: ₹${item.amount})\n\n`;
+                        orderDetailsText += `- S.No: ${item.s_no} - ${item.name}\n  (Qty: ${item.quantity}, Price: ₹${item.amount})\n\n`;
                     });
 
                     // Action 2: Send the email to the owner via EmailJS
@@ -1224,10 +1224,10 @@
                             columnStyles: {
                                 0: { halign: 'center', cellWidth: 15 },
                                 1: { halign: 'left', cellWidth: 75 },
-                                2: { halign: 'right' },
+                                2: { halign: 'center' },
                                 3: { halign: 'center' },
                                 4: { halign: 'center' },
-                                5: { halign: 'right' }
+                                5: { halign: 'center' }
                             }
                         });
 
@@ -1236,7 +1236,7 @@
                         // --- Grand Total ---
                         doc.setFontSize(18);
                         doc.setFont("helvetica", "bold");
-                        doc.text(total.replace('₹', 'Total: Rs. '), pageWidth - 14, finalY + 20, { align: 'right' });
+                        doc.text(total.replace('₹', 'Rs. '), pageWidth - 14, finalY + 20, { align: 'right' });
 
                         // --- PDF Footer ---
                         const pageHeight = doc.internal.pageSize.getHeight();
