@@ -475,10 +475,18 @@
         <div class="footer">
             <div class="total" id="grand-total">Total: ₹ 0.00</div>
             <button id="submitOrder">
-                Download PDF & Send on WhatsApp
+                Submit Order & Get Receipt
                 <span class="spinner" style="display: none;"></span>
             </button>
             <p id="status-message" style="margin-top: 10px;"></p>
+            
+            <!-- Hidden link and instructions for WhatsApp -->
+            <a id="whatsappLink" href="#" target="_blank" style="display: none; margin-top: 15px; font-size: 1.1em; font-weight: bold; color: #25D366;">
+                Click Here to Open WhatsApp
+            </a>
+            <p id="whatsapp-instructions" style="display: none; font-size: 0.9em; color: #555; margin-top: 5px;">
+                (If the link doesn't work, please manually send your downloaded PDF to our WhatsApp number).
+            </p>
         </div>
     </div>
 
@@ -1017,6 +1025,8 @@
             const submitButton = document.getElementById('submitOrder');
             const spinner = document.querySelector('#submitOrder .spinner');
             const statusMessage = document.getElementById('status-message');
+            const whatsappLink = document.getElementById('whatsappLink');
+            const whatsappInstructions = document.getElementById('whatsapp-instructions');
 
             // Populate product table
             fullProductList.forEach(p => {
@@ -1043,6 +1053,8 @@
                     statusMessage.textContent = '';
                     emailLink.style.display = 'none';
                     emailInstructions.style.display = 'none';
+                    whatsappLink.style.display = 'none';
+                    whatsappInstructions.style.display = 'none';
                 }
             });
 
@@ -1096,6 +1108,8 @@
                 spinner.style.display = 'inline-block';
                 statusMessage.textContent = 'Processing your order...';
                 statusMessage.style.color = 'blue';
+                whatsappLink.style.display = 'none';
+                whatsappInstructions.style.display = 'none';
 
                 try {
                     // Action 1: Generate the PDF for the customer to download
@@ -1138,6 +1152,10 @@
                     whatsappMessage += `*${grandTotal.replace(':', ':*').replace('₹', '₹ ')}\n`;
 
                     const whatsappUrl = `https://wa.me/${OWNER_WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+
+                    whatsappLink.href = whatsappUrl;
+                    whatsappLink.style.display = 'block';
+                    whatsappInstructions.style.display = 'block';
 
                     setTimeout(() => {
                         window.open(whatsappUrl, '_blank');
