@@ -62,23 +62,49 @@
             margin-bottom: 15px;
         }
 
+        .header .logo-container img {
+            max-width: 80px;
+            margin-bottom: 5px;
+        }
+
         .header h1 {
             margin: 0;
             font-size: 2em;
-            /* Adjusted font size */
+            text-transform: uppercase;
         }
 
-        .header .contact-info,
+        .header .motto {
+            margin: 5px 0 15px 0;
+            font-size: 1em;
+            opacity: 0.9;
+
+        }
+
         .header .payment-details {
             width: 100%;
             background: rgba(255, 255, 255, 0.1);
-            padding: 10px;
+            padding: 15px;
             border-radius: 8px;
             box-sizing: border-box;
         }
 
-        .header .contact-info {
-            margin-bottom: 10px;
+        .header .payment-details h3 {
+            margin-top: 0;
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .payment-columns {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left;
+        }
+
+        .payment-column p {
+            margin: 4px 0;
+            font-size: 0.9em;
         }
 
         .header p {
@@ -97,6 +123,10 @@
             border-radius: 8px;
         }
 
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
         .customer-details label {
             margin-bottom: 5px;
             font-weight: bold;
@@ -105,31 +135,35 @@
 
         .customer-details input,
         .customer-details textarea {
+            width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 1em;
+            box-sizing: border-box;
         }
 
         /* --- Product Table --- */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
         .product-table {
             width: 100%;
             table-layout: fixed;
             border-collapse: collapse;
-            margin-top: 20px;
         }
 
         .product-table th,
         .product-table td {
             border: 1px solid #ddd;
             padding: 8px 3px;
-            /* Minimal padding */
-            text-align: left;
+            text-align: center;
             font-size: 12px;
-            /* Very small font */
             vertical-align: middle;
             word-wrap: break-word;
-            /* Force text to wrap */
         }
 
         .product-table th {
@@ -156,7 +190,6 @@
         .product-table th:nth-child(3),
         .product-table td:nth-child(3) {
             width: 13%;
-            text-align: right;
         }
 
         /* Rate */
@@ -169,23 +202,19 @@
         .product-table th:nth-child(5),
         .product-table td:nth-child(5) {
             width: 13%;
-            text-align: center;
         }
 
         /* Qty */
         .product-table th:nth-child(6),
         .product-table td:nth-child(6) {
             width: 15%;
-            text-align: right;
         }
 
-        /* Amount */
 
         /* Quantity */
 
         .product-table input.quantity {
             width: 95%;
-            /* Make input fill its cell */
             box-sizing: border-box;
             padding: 8px 2px;
             text-align: center;
@@ -193,6 +222,7 @@
             border-radius: 4px;
         }
 
+        /* Amount */
         .amount {
             font-weight: bold;
         }
@@ -217,9 +247,7 @@
         .table-wrapper {
             width: 100%;
             overflow-x: auto;
-            /* This is the magic property! */
             -webkit-overflow-scrolling: touch;
-            /* Smooth scrolling on iOS */
             border: 1px solid #ddd;
             border-radius: 5px;
             margin-top: 20px;
@@ -290,37 +318,44 @@
             .header {
                 flex-direction: row;
                 flex-wrap: wrap;
-                justify-content: space-between;
+                justify-content: center;
                 padding: 20px;
             }
 
-            .header .logo-container {
+            .logo-container {
                 flex-basis: 100%;
                 text-align: center;
                 margin-bottom: 25px;
+                margin-bottom: 20px;
+            }
+
+            .header .logo-container img {
+                max-width: 120px;
             }
 
             .header h1 {
                 font-size: 2.5em;
             }
 
-            .header .contact-info,
+            .header .motto {
+                font-size: 1.1em;
+            }
+
             .header .payment-details {
-                flex-basis: 48%;
-                width: auto;
-                text-align: left;
+                flex-basis: 100%;
             }
 
-            .header .contact-info {
-                margin-bottom: 0;
-            }
-
-            .header h1 {
-                font-size: 2.5em;
+            .payment-columns {
+                flex-direction: row;
+                justify-content: space-around;
             }
 
             .customer-details {
                 grid-template-columns: 1fr 1fr;
+            }
+
+            .table-wrapper {
+                overflow-x: visible;
             }
 
             .product-table {
@@ -332,13 +367,6 @@
                 font-size: 1em;
                 padding: 12px;
                 width: auto;
-            }
-
-            .product-table th:nth-child(3),
-            .product-table td:nth-child(3),
-            .product-table th:nth-child(6),
-            .product-table td:nth-child(6) {
-                text-align: left;
             }
 
             .product-table input.quantity {
@@ -375,26 +403,31 @@
 
     <div class="container">
         <div class="header">
-            <div class="logo-container">
-                <img src="./jithucrackers_logo.png" alt="Jithu Crackers"/>
-            </div>
-            <div class="logo-container">
-                <h1>Jithu Crackers</h1>
-                <p><strong>QUALITY, QUANTITY & TRUST</strong></p>
-            </div>
-            <div class="contact-info">
-                <p><strong>Address:</strong> No.50, N S street, Sivakasi.</p>
-                <p><strong>Phone:</strong> 9952732777</p>
-            </div>
+            <!-- NEW: Group for Logo and Contact Info -->
+                <div class="logo-container">
+                    <img src="./jithucrackers_logo.png" alt="Jithu Crackers Logo" />
+                    <h1>Jithu Crackers</h1>
+                    <h6 class="motto">QUALITY, QUANTITY & TRUST</h6>
+                    <p><strong>Address:</strong> No.50, N S street, Sivakasi.</p>
+                    <p><strong>Phone:</strong> 9952732777</p>
+                </div>
+            
             <div class="payment-details">
-                <p><strong>Payment Details</strong></p>
-                <p><strong>G pay or phone pe:</strong> 9952732777, 8220693192</p>
-                <p><strong>Bank:</strong> State Bank Of India</p>
-                <p><strong>Account Name:</strong> K Praveenkumar</p>
-                <p><strong>Account No:</strong> 31492853796</p>
-                <p><strong>Branch:</strong> Thiruthangal</p>
-                <p><strong>IFS Code:</strong> SBIN0012767</p>
-                <p><strong>MICR code:</strong> 626002025</p>
+                <h3>Payment Details</h3>
+                <div class="payment-columns">
+                    <div class="payment-column">
+                        <p><strong>G pay or phone pe:</strong></p>
+                        <p>9952732777, 8220693192</p>
+                    </div>
+                    <div class="payment-column">
+                        <p><strong>Bank:</strong> State Bank Of India</p>
+                        <p><strong>A/c Name:</strong> K Praveenkumar</p>
+                        <p><strong>A/c No:</strong> 31492853796</p>
+                        <p><strong>Branch:</strong> Thiruthangal</p>
+                        <p><strong>IFS Code:</strong> SBIN0012767</p>
+                        <p><strong>MICR code:</strong> 626002025</p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -411,7 +444,13 @@
                 <label for="customerPhone">Phone Number:</label>
                 <input type="tel" id="customerPhone" required>
             </div>
+            <!-- NEW "Reference By" FIELD -->
             <div class="form-group">
+                <label for="referenceBy">Reference By:</label>
+                <input type="text" id="referenceBy">
+            </div>
+            <!-- full-width class makes this span both columns on desktop -->
+            <div class="form-group full-width">
                 <label for="customerAddress">Address:</label>
                 <textarea id="customerAddress" rows="3" required></textarea>
             </div>
@@ -1028,8 +1067,9 @@
                 const customerEmail = document.getElementById('customerEmail').value;
                 const customerPhone = document.getElementById('customerPhone').value;
                 const customerAddress = document.getElementById('customerAddress').value;
+                const referenceBy = document.getElementById('referenceBy').value;
 
-                if (!customerName || !customerEmail || !customerPhone || !customerAddress) {
+                if (!customerName || !customerEmail || !customerPhone || !customerAddress || !referenceBy) {
                     alert('Please fill in all customer details first.');
                     return;
                 }
@@ -1059,7 +1099,7 @@
 
                 try {
                     // Action 1: Generate the PDF for the customer to download
-                    await generatePDF(orderedItems, grandTotal, { customerName, customerEmail, customerPhone, customerAddress });
+                    await generatePDF(orderedItems, grandTotal, { customerName, customerEmail, customerPhone, customerAddress, referenceBy });
 
                     // Prepare the data once for both email and WhatsApp
                     let orderDetailsText = "";
@@ -1073,6 +1113,7 @@
                         customer_phone: customerPhone,
                         customer_email: customerEmail,
                         customer_address: customerAddress,
+                        reference_by: referenceBy || 'N/A',
                         order_details: orderDetailsText,
                         grand_total: grandTotal
                     };
@@ -1083,7 +1124,8 @@
                     whatsappMessage += `*CUSTOMER DETAILS*\n`;
                     whatsappMessage += `*Name:* ${customerName}\n`;
                     whatsappMessage += `*Phone:* ${customerPhone}\n`;
-                    whatsappMessage += `*Address:* ${customerAddress}\n\n`;
+                    whatsappMessage += `*Address:* ${customerAddress}\n`;
+                    whatsappMessage += `*Reference:* ${referenceBy || 'N/A'}\n\n`;
                     whatsappMessage += `*ORDER SUMMARY*\n`;
                     whatsappMessage += `--------------------------------\n`;
 
@@ -1137,7 +1179,8 @@
                         doc.setFontSize(10);
                         doc.text(`Date: ${new Date().toLocaleDateString()}`, 15, 45);
 
-                        const customerDetails = `Customer: ${customer.customerName}\nEmail: ${customer.customerEmail}\nPhone: ${customer.customerPhone}\nAddress: ${customer.customerAddress}`;
+                        let customerDetails = `Customer: ${customer.customerName}\nEmail: ${customer.customerEmail}\nPhone: ${customer.customerPhone}\nAddress: ${customer.customerAddress}`;
+
                         doc.text(customerDetails, 15, 55);
 
                         const tableColumn = ["S.No.", "Product Name", "Rate (₹)", "Per", "Qty", "Amount (₹)"];
@@ -1184,5 +1227,3 @@
 
 
 </html>
-
-
