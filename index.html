@@ -1075,6 +1075,16 @@
                 grandTotalElem.textContent = `Total: ₹ ${total.toFixed(2)}`;
             }
 
+            // Generates a UNIQUE time-based order number
+            function generateOrderNumber() {
+                const now = new Date();
+                const year = String(now.getFullYear()).slice(-2);
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const uniquePart = (now.getTime().toString() + Math.random().toString().slice(2, 7)).slice(-6).toUpperCase();
+                return `JC-${day}${month}${year}-${uniquePart}`;
+            }
+
             submitButton.addEventListener('click', async () => {
                 const customerName = document.getElementById('customerName').value;
                 const customerEmail = document.getElementById('customerEmail').value;
@@ -1113,8 +1123,10 @@
                 whatsappInstructions.style.display = 'none';
 
                 try {
-                    // Action 1: Generate the PDF for the customer to download
-                    await generatePDF(orderedItems, grandTotal, { customerName, customerEmail, customerPhone, customerAddress, referenceBy });
+                    const orderNumber = generateOrderNumber();
+
+                    // Generate the PDF for the customer to download
+                    await generatePDF(orderedItems, grandTotal, { customerName, customerEmail, customerPhone, customerAddress, referenceBy, orderNumber });
 
                     // Prepare the data once for both email and WhatsApp
                     let orderDetailsText = "";
@@ -1122,8 +1134,9 @@
                         orderDetailsText += `- S.No: ${item.s_no} - ${item.name}\n  (Qty: ${item.quantity}, Price: ₹${item.amount})\n\n`;
                     });
 
-                    // Action 2: Send the email to the owner via EmailJS
+                    // Send the email to the owner via EmailJS
                     const templateParams = {
+                        order_number: orderNumber,
                         customer_name: customerName,
                         customer_phone: customerPhone,
                         customer_email: customerEmail,
@@ -1134,11 +1147,11 @@
                     };
                     await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
 
-                    // Action 3: Prepare and open the WhatsApp chat
+                    // Prepare and open the WhatsApp chat
                     let finalWhatsappMessage;
 
                     // First, build the FULL, detailed message
-                    let whatsappMessage = `*New Order for Jithu Crackers*\n\n`;
+                    let whatsappMessage = `*New Order: ${orderNumber} for Jithu Crackers*\n\n`;
                     whatsappMessage += `*CUSTOMER DETAILS*\n`;
                     whatsappMessage += `*Name:* ${customerName}\n`;
                     whatsappMessage += `*Phone:* ${customerPhone}\n`;
@@ -1158,7 +1171,7 @@
                     // Now, check if the full message is too long
                     if (whatsappMessage.length > WHATSAPP_URL_LIMIT) {
                         // If it's too long, create the short summary message
-                        let shortWhatsappMessage = `*New Order from Jithu Crackers Website*\n\n`;
+                        let shortWhatsappMessage = `*New Order: ${orderNumber} for Jithu Crackers*\n\n`;
                         shortWhatsappMessage += `*CUSTOMER:*\n${customerName}\n${customerPhone}\n\n`;
                         shortWhatsappMessage += `*ORDER SUMMARY (S.No - Qty):*\n`;
                         orderedItems.forEach(item => {
@@ -1210,7 +1223,6 @@
                         doc.setFontSize(28);
                         doc.setTextColor('#D32F2F');
                         doc.text("Jithu Crackers", pageWidth / 2, 22, { align: 'center' });
-
                         doc.setFont("helvetica", "normal");
                         doc.setFontSize(14);
                         doc.setTextColor('#333333');
@@ -1231,19 +1243,19 @@
                         doc.text(billToText, 14, 57);
 
                         // Right Column
-                        let invoiceDetailsText = `Date: ${new Date().toLocaleDateString()}\n`;
+                        let invoiceDetailsText = `Order Number: ${customer.orderNumber}\n`;
+                        invoiceDetailsText += `Date: ${new Date().toLocaleDateString()}\n`;
                         invoiceDetailsText += `Email: ${customer.customerEmail}\n`;
                         invoiceDetailsText += `Phone: ${customer.customerPhone}`;
-                        if (customer.referenceBy) {
-                            invoiceDetailsText += `\nReference: ${customer.referenceBy}`;
-                        }
+                        invoiceDetailsText += `\nReference: ${customer.referenceBy}`;
+
                         doc.text(invoiceDetailsText, 110, 57);
 
                         // --- Order Table ---
                         const tableColumn = ["S.No.", "Product Name", "Rate (Rs.)", "Per", "Qty", "Amount (Rs.)"];
                         const tableRows = items.map(item => [
                             item.s_no,
-                            item.name.replace(/[^a-zA-Z0-9\s-().']/g, ''),
+                            item.name.split('(')[0].trim(),
                             item.rate,
                             item.per,
                             item.quantity,
@@ -1285,7 +1297,7 @@
                         doc.setTextColor('#555555');
                         doc.text("Thank you for your business!", pageWidth / 2, pageHeight - 10, { align: 'center' });
 
-                        doc.save(`Jithu_Crackers_Order_${customer.customerName.replace(/\s/g, '_')}.pdf`);
+                        doc.save(`Jithu_Crackers_Order_${customer.orderNumber}.pdf`);
                         resolve();
                     } catch (e) {
                         console.error("Error in generatePDF function:", e);
