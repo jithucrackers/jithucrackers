@@ -491,11 +491,12 @@
     </div>
 
     <script>
-
+        // --- CONFIGURATION ---
         const OWNER_WHATSAPP_NUMBER = "919952732777";
         const EMAILJS_SERVICE_ID = "service_lhts3wi";
         const EMAILJS_TEMPLATE_ID = "template_a635xkg";
         const EMAILJS_PUBLIC_KEY = "wUCymOolToaUHrEQl";
+        const WHATSAPP_URL_LIMIT = 1800;
 
         (function () {
             emailjs.init(EMAILJS_PUBLIC_KEY);
@@ -1134,7 +1135,10 @@
                     await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
 
                     // Action 3: Prepare and open the WhatsApp chat
-                    let whatsappMessage = `*New Order from Jithu Crackers Website*\n\n`;
+                    let finalWhatsappMessage;
+
+                    // First, build the FULL, detailed message
+                    let whatsappMessage = `*New Order for Jithu Crackers*\n\n`;
                     whatsappMessage += `*CUSTOMER DETAILS*\n`;
                     whatsappMessage += `*Name:* ${customerName}\n`;
                     whatsappMessage += `*Phone:* ${customerPhone}\n`;
@@ -1151,7 +1155,25 @@
 
                     whatsappMessage += `*${grandTotal.replace(':', ':*').replace('₹', '₹ ')}\n`;
 
-                    const whatsappUrl = `https://wa.me/${OWNER_WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+                    // Now, check if the full message is too long
+                    if (whatsappMessage.length > WHATSAPP_URL_LIMIT) {
+                        // If it's too long, create the short summary message
+                        let shortWhatsappMessage = `*New Order from Jithu Crackers Website*\n\n`;
+                        shortWhatsappMessage += `*CUSTOMER:*\n${customerName}\n${customerPhone}\n\n`;
+                        shortWhatsappMessage += `*ORDER SUMMARY (S.No - Qty):*\n`;
+                        orderedItems.forEach(item => {
+                            shortWhatsappMessage += `${item.s_no} - ${item.quantity}\n`;
+                        });
+                        shortWhatsappMessage += `\n*${grandTotal.replace(':', ':*').replace('₹', '₹ ')}*\n\n`;
+                        shortWhatsappMessage += `(Full details are in the PDF and email).`;
+                        finalWhatsappMessage = shortWhatsappMessage;
+                    } else {
+                        // If it's short enough, use the full message
+                        finalWhatsappMessage = whatsappMessage;
+                    }
+
+                    const whatsappUrl = `https://wa.me/${OWNER_WHATSAPP_NUMBER}?text=${encodeURIComponent(finalWhatsappMessage)}`;
+                    window.open(whatsappUrl, '_blank');
 
                     whatsappLink.href = whatsappUrl;
                     whatsappLink.style.display = 'block';
