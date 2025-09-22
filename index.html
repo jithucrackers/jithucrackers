@@ -1182,7 +1182,8 @@
                     whatsappMessage += `--------------------------------\n`;
 
                     orderedItems.forEach(item => {
-                        whatsappMessage += `*${item.s_no}. ${item.name.split('(')[0].trim()}*\nRate: ~₹${item.originalRate}~ *Offer: ₹${item.offerRate}*\nQty: ${item.quantity} | Amount: ₹${item.amount}\n--------------------------------\n`;
+                        whatsappMessage += `*${item.s_no}. ${item.name}*\n`;
+                        whatsappMessage += `Rate: ~₹${item.originalRate}~ *Offer: ₹${item.offerRate}*\nQty: ${item.quantity} | Amount: ₹${item.amount}\n--------------------------------\n`;
                     });
 
                     whatsappMessage += `*${grandTotal.replace(':', ':*').replace('₹', '₹ ')}\n`;
