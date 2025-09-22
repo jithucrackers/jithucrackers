@@ -161,7 +161,7 @@
             border: 1px solid #ddd;
             padding: 8px 3px;
             text-align: center;
-            font-size: 12px;
+            font-size: 13px;
             vertical-align: middle;
             word-wrap: break-word;
         }
@@ -172,46 +172,56 @@
             position: sticky;
             top: 0;
             z-index: 10;
+            text-align: center;
         }
 
-        /* Precise Column Widths for Mobile */
         .product-table th:nth-child(1),
         .product-table td:nth-child(1) {
-            width: 9%;
+            width: 7%;
         }
 
-        /* S.No. */
         .product-table th:nth-child(2),
         .product-table td:nth-child(2) {
-            width: 37%;
+            width: 30%;
         }
 
-        /* Product */
         .product-table th:nth-child(3),
         .product-table td:nth-child(3) {
             width: 13%;
         }
 
-        /* Rate */
         .product-table th:nth-child(4),
         .product-table td:nth-child(4) {
             width: 13%;
         }
 
-        /* Per */
         .product-table th:nth-child(5),
         .product-table td:nth-child(5) {
+            width: 12%;
+        }
+
+        .product-table th:nth-child(6),
+        .product-table td:nth-child(6) {
             width: 13%;
         }
 
-        /* Qty */
-        .product-table th:nth-child(6),
-        .product-table td:nth-child(6) {
+        .product-table th:nth-child(7),
+        .product-table td:nth-child(7) {
             width: 15%;
         }
 
+        .product-table td.original-rate {
+            color: #777;
+        }
 
-        /* Quantity */
+        .product-table td.offer-rate {
+            font-weight: bold;
+            color: green;
+        }
+
+        .product-table td.amount {
+            font-weight: bold;
+        }
 
         .product-table input.quantity {
             width: 95%;
@@ -222,17 +232,12 @@
             border-radius: 4px;
         }
 
-        /* Amount */
-        .amount {
-            font-weight: bold;
-        }
-
         .category-header {
             background-color: var(--secondary-color);
             color: var(--text-color);
             font-size: 1em;
             font-weight: bold;
-            text-align: center;
+            text-align: center !important;
         }
 
         /* --- Footer --- */
@@ -358,10 +363,6 @@
                 overflow-x: visible;
             }
 
-            .product-table {
-                table-layout: auto;
-            }
-
             .product-table th,
             .product-table td {
                 font-size: 1em;
@@ -403,7 +404,6 @@
 
     <div class="container">
         <div class="header">
-            <!-- NEW: Group for Logo and Contact Info -->
             <div class="logo-container">
                 <img src="./jithucrackers_logo.png" alt="Jithu Crackers Logo" />
                 <h1>Jithu Crackers</h1>
@@ -444,12 +444,10 @@
                 <label for="customerPhone">Phone Number:</label>
                 <input type="tel" id="customerPhone" required>
             </div>
-            <!-- NEW "Reference By" FIELD -->
             <div class="form-group">
                 <label for="referenceBy">Reference By:</label>
                 <input type="text" id="referenceBy">
             </div>
-            <!-- full-width class makes this span both columns on desktop -->
             <div class="form-group full-width">
                 <label for="customerAddress">Address:</label>
                 <textarea id="customerAddress" rows="3" required></textarea>
@@ -463,8 +461,9 @@
                         <th>S.No.</th>
                         <th>Products(பொருட்கள்)</th>
                         <th>Rate (₹)</th>
+                        <th>Offer (₹)</th>
                         <th>Per</th>
-                        <th>Quantity</th>
+                        <th>Qty</th>
                         <th>Amount (₹)</th>
                     </tr>
                 </thead>
@@ -479,9 +478,9 @@
                 <span class="spinner" style="display: none;"></span>
             </button>
             <p id="status-message" style="margin-top: 10px;"></p>
-            
-            <!-- Hidden link and instructions for WhatsApp -->
-            <a id="whatsappLink" href="#" target="_blank" style="display: none; margin-top: 15px; font-size: 1.1em; font-weight: bold; color: #25D366;">
+
+            <a id="whatsappLink" href="#" target="_blank"
+                style="display: none; margin-top: 15px; font-size: 1.1em; font-weight: bold; color: #25D366;">
                 Click Here to Open WhatsApp
             </a>
             <p id="whatsapp-instructions" style="display: none; font-size: 0.9em; color: #555; margin-top: 5px;">
@@ -497,6 +496,9 @@
         const EMAILJS_TEMPLATE_ID = "template_a635xkg";
         const EMAILJS_PUBLIC_KEY = "wUCymOolToaUHrEQl";
         const WHATSAPP_URL_LIMIT = 1800;
+        const DISCOUNT_PERCENTAGE = 0.75;
+        // The number 1.125 represents that 12.5% markup
+        const PRICE_MULTIPLIER = 1.125;
 
         (function () {
             emailjs.init(EMAILJS_PUBLIC_KEY);
@@ -1033,16 +1035,30 @@
             fullProductList.forEach(p => {
                 if (p.category) {
                     const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="6" class="category-header">${p.category}</td>`;
+                    row.innerHTML = `<td colspan="7" class="category-header">${p.category}</td>`;
                     productList.appendChild(row);
                 } else {
-                    const newRate = (p.rate * 1.125).toFixed(2);
+                    const baseRate = parseFloat(p.rate);
+                    const preciseOriginalRate = baseRate * PRICE_MULTIPLIER;
+                    const displayOriginalRate = Math.round(preciseOriginalRate);
+                    const offerRate = Math.round(preciseOriginalRate * (1 - DISCOUNT_PERCENTAGE));
+
                     const row = document.createElement('tr');
                     row.dataset.id = p.s_no;
                     row.dataset.name = p.name;
-                    row.dataset.rate = newRate;
+                    row.dataset.originalRate = displayOriginalRate.toFixed(2);
+                    row.dataset.rate = offerRate.toFixed(2);
                     row.dataset.per = p.per;
-                    row.innerHTML = `<td>${p.s_no}</td><td>${p.name}</td><td>${newRate}</td><td>${p.per}</td><td><input type="number" min="0" class="quantity" placeholder="0"></td><td class="amount">0.00</td>`;
+
+                    row.innerHTML = `
+                        <td>${p.s_no}</td>
+                        <td>${p.name}</td>
+                        <td class="original-rate">${displayOriginalRate}</td>
+                        <td class="offer-rate">${offerRate}</td>
+                        <td>${p.per}</td>
+                        <td><input type="number" min="0" class="quantity" placeholder="0"></td>
+                        <td class="amount">0</td>
+                    `;
                     productList.appendChild(row);
                 }
             });
@@ -1102,8 +1118,13 @@
                     const quantity = parseInt(row.querySelector('.quantity').value) || 0;
                     if (quantity > 0) {
                         orderedItems.push({
-                            s_no: row.dataset.id, name: row.dataset.name, rate: row.dataset.rate,
-                            per: row.dataset.per, quantity: quantity, amount: (parseFloat(row.dataset.rate) * quantity).toFixed(2)
+                            s_no: row.dataset.id,
+                            name: row.dataset.name,
+                            originalRate: row.dataset.originalRate,
+                            offerRate: row.dataset.rate,
+                            per: row.dataset.per,
+                            quantity: quantity,
+                            amount: (parseFloat(row.dataset.rate) * quantity).toFixed(2)
                         });
                     }
                 });
@@ -1131,7 +1152,7 @@
                     // Prepare the data once for both email and WhatsApp
                     let orderDetailsText = "";
                     orderedItems.forEach(item => {
-                        orderDetailsText += `- S.No: ${item.s_no} - ${item.name}\n  (Qty: ${item.quantity}, Price: ₹${item.amount})\n\n`;
+                        orderDetailsText += `- S.No: ${item.s_no} - ${item.name}\n  Rate: ₹${item.originalRate} | Offer Rate: ₹${item.offerRate}\n  Qty: ${item.quantity} | Amount: ₹${item.amount}\n\n`;
                     });
 
                     // Send the email to the owner via EmailJS
@@ -1162,8 +1183,7 @@
 
                     orderedItems.forEach(item => {
                         whatsappMessage += `*${item.s_no}. ${item.name}*\n`;
-                        whatsappMessage += `Qty: ${item.quantity} | Rate: ₹${item.rate} | Amount: ₹${item.amount}\n`;
-                        whatsappMessage += `--------------------------------\n`;
+                        whatsappMessage += `*${item.s_no}. ${item.name.split('(')[0].trim()}*\nRate: ~₹${item.originalRate}~ *Offer: ₹${item.offerRate}*\nQty: ${item.quantity} | Amount: ₹${item.amount}\n--------------------------------\n`;
                     });
 
                     whatsappMessage += `*${grandTotal.replace(':', ':*').replace('₹', '₹ ')}\n`;
@@ -1252,11 +1272,12 @@
                         doc.text(invoiceDetailsText, 110, 57);
 
                         // --- Order Table ---
-                        const tableColumn = ["S.No.", "Product Name", "Rate (Rs.)", "Per", "Qty", "Amount (Rs.)"];
+                        const tableColumn = ["S.No.", "Product Name", "Rate (Rs.)", "Offer (Rs.)", "Per", "Qty", "Amount (Rs.)"];
                         const tableRows = items.map(item => [
                             item.s_no,
                             item.name.split('(')[0].trim(),
-                            item.rate,
+                            item.originalRate,
+                            item.offerRate,
                             item.per,
                             item.quantity,
                             item.amount
@@ -1275,11 +1296,12 @@
                             },
                             columnStyles: {
                                 0: { halign: 'center', cellWidth: 15 },
-                                1: { halign: 'left', cellWidth: 75 },
+                                1: { halign: 'left', cellWidth: 'auto' },
                                 2: { halign: 'center' },
                                 3: { halign: 'center' },
                                 4: { halign: 'center' },
-                                5: { halign: 'center' }
+                                5: { halign: 'center' },
+                                6: { halign: 'center' },
                             }
                         });
 
