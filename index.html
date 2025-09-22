@@ -1046,8 +1046,8 @@
                     const row = document.createElement('tr');
                     row.dataset.id = p.s_no;
                     row.dataset.name = p.name;
-                    row.dataset.originalRate = displayOriginalRate.toFixed(2);
-                    row.dataset.rate = offerRate.toFixed(2);
+                    row.dataset.originalRate = displayOriginalRate;
+                    row.dataset.rate = offerRate;
                     row.dataset.per = p.per;
 
                     row.innerHTML = `
@@ -1079,7 +1079,7 @@
                 const rate = parseFloat(row.dataset.rate);
                 const quantity = parseInt(row.querySelector('.quantity').value) || 0;
                 const amountCell = row.querySelector('.amount');
-                const newAmount = (rate * quantity).toFixed(2);
+                const newAmount = (rate * quantity);
                 amountCell.textContent = newAmount;
             }
 
@@ -1088,7 +1088,7 @@
                 productList.querySelectorAll('tr[data-id]').forEach(row => {
                     total += parseFloat(row.querySelector('.amount').textContent);
                 });
-                grandTotalElem.textContent = `Total: ₹ ${total.toFixed(2)}`;
+                grandTotalElem.textContent = `Total: ₹ ${total}`;
             }
 
             // Generates a UNIQUE time-based order number
@@ -1124,7 +1124,7 @@
                             offerRate: row.dataset.rate,
                             per: row.dataset.per,
                             quantity: quantity,
-                            amount: (parseFloat(row.dataset.rate) * quantity).toFixed(2)
+                            amount: (parseFloat(row.dataset.rate) * quantity)
                         });
                     }
                 });
