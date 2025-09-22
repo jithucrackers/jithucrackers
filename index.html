@@ -1235,6 +1235,7 @@
                         const { jsPDF } = window.jspdf;
                         const doc = new jsPDF();
                         const pageWidth = doc.internal.pageSize.getWidth();
+                        const pageMargin = 14;
 
                         // --- PDF Header ---
                         doc.setFont("helvetica", "bold");
@@ -1253,7 +1254,7 @@
 
                         // *** NEW: Horizontal Line after Header ***
                         doc.setDrawColor(221, 221, 221);
-                        doc.line(pageMargin, 45, pageWidth - pageMargin, 45);
+                        doc.line(pageMargin, 48, pageWidth - pageMargin, 48);
 
 
                         // --- Customer Details ---
@@ -1309,17 +1310,17 @@
                         
                         const finalY = doc.lastAutoTable.finalY;
 
-                        doc.line(pageMargin, finalY + 8, pageWidth - pageMargin, finalY + 8);
+                        doc.line(pageMargin, finalY + 10, pageWidth - pageMargin, finalY + 10);
                         
                         // --- Grand Total ---
                         doc.setFontSize(18);
                         doc.setFont("helvetica", "bold");
                         doc.text(total.replace('Total: ₹', 'Total: Rs. '), pageWidth - 14, finalY + 15, { align: 'right' });
 
-                        doc.line(pageMargin, finalY + 22, pageWidth - pageMargin, finalY + 22);
+                        doc.line(pageMargin, finalY + 23, pageWidth - pageMargin, finalY + 23);
 
                         // --- Payment Details Section ---
-                        const paymentY = finalY + 25;
+                        const paymentY = finalY + 35;
                         doc.setFontSize(11);
                         doc.setFont("helvetica", "bold");
                         doc.text("Payment Details:", 14, paymentY);
