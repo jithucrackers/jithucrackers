@@ -460,7 +460,7 @@
                     <tr>
                         <th>S.No.</th>
                         <th>Products <br> (பொருட்கள்)</th>
-                        <th>Rate (₹)</th>
+                        <th>MRP Rate (₹)</th>
                         <th>75% <br> Discounted <br> Offer Rate (₹)</th>
                         <th>Per</th>
                         <th>Qty</th>
@@ -1068,8 +1068,6 @@
                     updateRow(e.target.closest('tr'));
                     updateTotal();
                     statusMessage.textContent = '';
-                    emailLink.style.display = 'none';
-                    emailInstructions.style.display = 'none';
                     whatsappLink.style.display = 'none';
                     whatsappInstructions.style.display = 'none';
                 }
@@ -1152,7 +1150,7 @@
                     // Prepare the data once for both email and WhatsApp
                     let orderDetailsText = "";
                     orderedItems.forEach(item => {
-                        orderDetailsText += `- S.No: ${item.s_no} - ${item.name}\n  Rate: ₹${item.originalRate} | 75% Discounted Offer Rate: ₹${item.offerRate}\n  Qty: ${item.quantity} | Amount: ₹${item.amount}\n\n`;
+                        orderDetailsText += `- S.No: ${item.s_no} - ${item.name}\n  MRP Rate: ₹${item.originalRate} | 75% Discounted Offer Rate: ₹${item.offerRate}\n  Qty: ${item.quantity} | Amount: ₹${item.amount}\n\n`;
                     });
 
                     // Send the email to the owner via EmailJS
@@ -1183,7 +1181,7 @@
 
                     orderedItems.forEach(item => {
                         whatsappMessage += `*${item.s_no}. ${item.name}*\n`;
-                        whatsappMessage += `Rate: ~₹${item.originalRate}~ *75% Discounted Offer Rate: ₹${item.offerRate}*\nQty: ${item.quantity} | Amount: ₹${item.amount}\n--------------------------------\n`;
+                        whatsappMessage += `MRP Rate: ~₹${item.originalRate}~ *75% Discounted Offer Rate: ₹${item.offerRate}*\nQty: ${item.quantity} | Amount: ₹${item.amount}\n--------------------------------\n`;
                     });
 
                     whatsappMessage += `*${grandTotal.replace(':', ':*').replace('₹', '₹ ')}\n`;
@@ -1243,36 +1241,45 @@
                         doc.setFontSize(28);
                         doc.setTextColor('#D32F2F');
                         doc.text("Jithu Crackers", pageWidth / 2, 22, { align: 'center' });
+                        
+                        doc.setFont("helvetica", "bold");
+                        doc.setFontSize(10);
+                        doc.setTextColor('#333333');
+                        doc.text("QUALITY, QUANTITY & TRUST", pageWidth / 2, 27, { align: 'center' });
+
                         doc.setFont("helvetica", "normal");
                         doc.setFontSize(14);
-                        doc.setTextColor('#333333');
-                        doc.text("Order Invoice", pageWidth / 2, 32, { align: 'center' });
+                        doc.text("Order Invoice", pageWidth / 2, 35, { align: 'center' });
 
-                        // --- Customer Details (Two-Column Layout) ---
+                        // *** NEW: Horizontal Line after Header ***
+                        doc.setDrawColor(221, 221, 221);
+                        doc.line(pageMargin, 45, pageWidth - pageMargin, 45);
+
+
+                        // --- Customer Details ---
                         doc.setFont("helvetica", "bold");
                         doc.setFontSize(11);
                         doc.setTextColor('#000000');
                         doc.text("Bill To:", 14, 50);
                         doc.text("Invoice Details:", 110, 50);
-
+                        
                         doc.setFont("helvetica", "normal");
                         doc.setFontSize(10);
-
-                        // Left Column
+                        
                         const billToText = `${customer.customerName}\n${customer.customerAddress}`;
                         doc.text(billToText, 14, 57);
 
-                        // Right Column
                         let invoiceDetailsText = `Order Number: ${customer.orderNumber}\n`;
                         invoiceDetailsText += `Date: ${new Date().toLocaleDateString()}\n`;
                         invoiceDetailsText += `Email: ${customer.customerEmail}\n`;
                         invoiceDetailsText += `Phone: ${customer.customerPhone}`;
-                        invoiceDetailsText += `\nReference: ${customer.referenceBy}`;
-
+                        if (customer.referenceBy) {
+                            invoiceDetailsText += `\nReference: ${customer.referenceBy}`;
+                        }
                         doc.text(invoiceDetailsText, 110, 57);
 
                         // --- Order Table ---
-                        const tableColumn = ["S.No.", "Product Name", "Rate (Rs.)", "75% Discounted Offer Rate(Rs.)", "Per", "Qty", "Amount (Rs.)"];
+                        const tableColumn = ["S.No.", "Product Name", "MRP (Rs.)", "Offer (Rs.)", "Per", "Qty", "Amount (Rs.)"];
                         const tableRows = items.map(item => [
                             item.s_no,
                             item.name.split('(')[0].trim(),
@@ -1282,35 +1289,50 @@
                             item.quantity,
                             item.amount
                         ]);
-
+                        
                         doc.autoTable({
                             head: [tableColumn],
                             body: tableRows,
                             startY: 85,
                             theme: 'striped',
-                            headStyles: {
-                                fillColor: [211, 47, 47],
-                                textColor: [255, 255, 255],
-                                fontStyle: 'bold',
-                                halign: 'center'
-                            },
+                            headStyles: { fillColor: [211, 47, 47], textColor: [255, 255, 255], fontStyle: 'bold', halign: 'center' },
                             columnStyles: {
                                 0: { halign: 'center', cellWidth: 15 },
                                 1: { halign: 'left', cellWidth: 'auto' },
-                                2: { halign: 'center' },
-                                3: { halign: 'center' },
-                                4: { halign: 'center' },
-                                5: { halign: 'center' },
-                                6: { halign: 'center' },
+                                2: { halign: 'right', cellWidth: 20 },
+                                3: { halign: 'right', cellWidth: 20 },
+                                4: { halign: 'center', cellWidth: 20 },
+                                5: { halign: 'center', cellWidth: 15 },
+                                6: { halign: 'right', cellWidth: 25 }
                             }
                         });
-
+                        
                         const finalY = doc.lastAutoTable.finalY;
 
+                        doc.line(pageMargin, finalY + 8, pageWidth - pageMargin, finalY + 8);
+                        
                         // --- Grand Total ---
                         doc.setFontSize(18);
                         doc.setFont("helvetica", "bold");
-                        doc.text(total.replace('₹', 'Rs. '), pageWidth - 14, finalY + 20, { align: 'right' });
+                        doc.text(total.replace('Total: ₹', 'Total: Rs. '), pageWidth - 14, finalY + 15, { align: 'right' });
+
+                        doc.line(pageMargin, finalY + 22, pageWidth - pageMargin, finalY + 22);
+
+                        // --- Payment Details Section ---
+                        const paymentY = finalY + 25;
+                        doc.setFontSize(11);
+                        doc.setFont("helvetica", "bold");
+                        doc.text("Payment Details:", 14, paymentY);
+                        doc.setFont("helvetica", "normal");
+                        doc.setFontSize(10);
+                        const gpayText = "G pay or phone pe:\n9952732777, 8220693192";
+                        doc.text(gpayText, 14, paymentY + 7);
+                        let bankText = "Bank: State Bank Of India\n";
+                        bankText += "A/c Name: K Praveenkumar\n";
+                        bankText += "A/c No: 31492853796\n";
+                        bankText += "Branch: Thiruthangal\n";
+                        bankText += "IFS Code: SBIN0012767";
+                        doc.text(bankText, 110, paymentY + 7);
 
                         // --- PDF Footer ---
                         const pageHeight = doc.internal.pageSize.getHeight();
