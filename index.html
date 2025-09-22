@@ -459,9 +459,9 @@
                 <thead>
                     <tr>
                         <th>S.No.</th>
-                        <th>Products(பொருட்கள்)</th>
+                        <th>Products <br> (பொருட்கள்)</th>
                         <th>Rate (₹)</th>
-                        <th>Offer (₹)</th>
+                        <th>75% <br> Discounted <br> Offer Rate (₹)</th>
                         <th>Per</th>
                         <th>Qty</th>
                         <th>Amount (₹)</th>
@@ -1152,7 +1152,7 @@
                     // Prepare the data once for both email and WhatsApp
                     let orderDetailsText = "";
                     orderedItems.forEach(item => {
-                        orderDetailsText += `- S.No: ${item.s_no} - ${item.name}\n  Rate: ₹${item.originalRate} | Offer Rate: ₹${item.offerRate}\n  Qty: ${item.quantity} | Amount: ₹${item.amount}\n\n`;
+                        orderDetailsText += `- S.No: ${item.s_no} - ${item.name}\n  Rate: ₹${item.originalRate} | 75% Discounted Offer Rate: ₹${item.offerRate}\n  Qty: ${item.quantity} | Amount: ₹${item.amount}\n\n`;
                     });
 
                     // Send the email to the owner via EmailJS
@@ -1183,7 +1183,7 @@
 
                     orderedItems.forEach(item => {
                         whatsappMessage += `*${item.s_no}. ${item.name}*\n`;
-                        whatsappMessage += `Rate: ~₹${item.originalRate}~ *Offer: ₹${item.offerRate}*\nQty: ${item.quantity} | Amount: ₹${item.amount}\n--------------------------------\n`;
+                        whatsappMessage += `Rate: ~₹${item.originalRate}~ *75% Discounted Offer Rate: ₹${item.offerRate}*\nQty: ${item.quantity} | Amount: ₹${item.amount}\n--------------------------------\n`;
                     });
 
                     whatsappMessage += `*${grandTotal.replace(':', ':*').replace('₹', '₹ ')}\n`;
@@ -1272,7 +1272,7 @@
                         doc.text(invoiceDetailsText, 110, 57);
 
                         // --- Order Table ---
-                        const tableColumn = ["S.No.", "Product Name", "Rate (Rs.)", "Offer (Rs.)", "Per", "Qty", "Amount (Rs.)"];
+                        const tableColumn = ["S.No.", "Product Name", "Rate (Rs.)", "75% Discounted Offer Rate(Rs.)", "Per", "Qty", "Amount (Rs.)"];
                         const tableRows = items.map(item => [
                             item.s_no,
                             item.name.split('(')[0].trim(),
